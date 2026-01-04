@@ -1383,6 +1383,11 @@ CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj: C:/Users/zacha/P
   C:/msys64/ucrt64/include/c++/15.2.0/bits/unicode-data.h \
   _deps/glad-build/include/glad/glad.h \
   _deps/glad-build/include/KHR/khrplatform.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/vector \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_uninitialized.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_vector.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_bvector.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/vector.tcc \
   C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h
 
 CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/triangle/triangle.cpp \

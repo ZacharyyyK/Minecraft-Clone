@@ -82,6 +82,7 @@ Cube::Cube()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true);
     unsigned char *data = stbi_load("C:/Users/zacha/Projects/Minecraft/src/textures/TextureAtlas.jpg", &width, &height, &nrChannels, 0);
     if (!data)
     {
@@ -106,6 +107,35 @@ Cube::Cube()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+void Cube::setFaceUVs(int faceIndex, const std::vector<std::pair<float, float>>& uvs)
+{
+    int beginIdx = faceIndex * 4 * 5;
+
+    // Bottom Left Set:
+    vertices[beginIdx + 3] = uvs[0].first;
+    vertices[beginIdx + 4] = uvs[0].second;
+
+    // Bottom Right Set:
+    vertices[beginIdx + 8] = uvs[1].first;
+    vertices[beginIdx + 9] = uvs[1].second;
+
+    // Top Right Set:
+    vertices[beginIdx + 13] = uvs[3].first;
+    vertices[beginIdx + 14] = uvs[3].second;
+
+    // Top Left Set:
+    vertices[beginIdx + 18] = uvs[2].first;
+    vertices[beginIdx + 19] = uvs[2].second;
+
+}
+
+void Cube::SendVertexData()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(GLfloat), vertices.data());
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 Cube::~Cube()
 {
     
@@ -119,4 +149,6 @@ void Cube::draw()
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*) 0);
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

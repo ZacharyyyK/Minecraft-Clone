@@ -120,7 +120,12 @@ int main()
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-    // GrassBlock cube;
+    TextureAtlas TA("", 2, 2);
+    std::vector<std::pair<float, float>> sideGrassCoords = TA.getCoordsForBlock(0,0);
+    auto botGrassCords = TA.getCoordsForBlock(0, 1);
+    auto topGrassCords = TA.getCoordsForBlock(1,0);
+
+    GrassBlock cube(sideGrassCoords, botGrassCords, topGrassCords);
 
     while(!window.shouldClose())
     {
@@ -132,7 +137,7 @@ int main()
         p.SetMat4Uniform("view", view);
 
         // tri.draw();
-        // cube.draw();
+        cube.draw();
 
         window.swapBuffers();
         window.pollEvents();

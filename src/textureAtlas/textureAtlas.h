@@ -18,6 +18,9 @@ private:
     int horiBlocks;
     int vertBlocks;
 
+    float rowStep;
+    float colStep;
+
     int width;
     int height;
     int nrChannels;

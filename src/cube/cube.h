@@ -14,6 +14,10 @@ public:
     void draw();
 protected:
 
+    void setFaceUVs(int faceIndex, const std::vector<std::pair<float, float>>& uvs);
+    void SendVertexData();
+    
+
     GLuint VAO;
     GLuint VBO;
     GLuint IBO;
