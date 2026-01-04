@@ -14,7 +14,7 @@
 #include "shaders/program.h"
 #include "camera/camera.h"
 #include "cube/cube.h"
-#include "grassblock/grass_block.h"
+#include "grassblock/grassBlock.h"
 #include "textureAtlas/textureAtlas.h"
 
 int WIDTH = 1200;
@@ -120,8 +120,9 @@ int main()
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-    TextureAtlas TA("", 2, 2);
-    std::vector<std::pair<float, float>> sideGrassCoords = TA.getCoordsForBlock(0,0);
+    TextureAtlas TA(2, 2);
+    // std::vector<std::pair<float, float>> sideGrassCoords = TA.getCoordsForBlock(0,0);
+    auto sideGrassCoords = TA.getCoordsForBlock("Side Grass");
     auto botGrassCords = TA.getCoordsForBlock(0, 1);
     auto topGrassCords = TA.getCoordsForBlock(1,0);
 

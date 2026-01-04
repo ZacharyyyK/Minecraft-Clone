@@ -371,4 +371,11 @@ CMakeFiles/minecraft.dir/src/main.cpp.obj: \
  C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h \
  C:\Users\zacha\Projects\Minecraft\src\grassblock/grass_block.h \
  C:\Users\zacha\Projects\Minecraft\src\textureAtlas/textureAtlas.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/unordered_map \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/unordered_map.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/hashtable.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/hashtable_policy.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/ext/aligned_buffer.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/node_handle.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/erase_if.h \
  C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h

@@ -1,9 +1,34 @@
 # include "textureAtlas.h"
 
-TextureAtlas::TextureAtlas(string textureAtlasPath, int numBlocksHori, int numBlocksVert) : horiBlocks(numBlocksHori), vertBlocks(numBlocksVert)
+TextureAtlas::TextureAtlas(int numBlocksHori, int numBlocksVert) : horiBlocks(numBlocksHori), vertBlocks(numBlocksVert)
 {
     rowStep = 1.0f / ((float) numBlocksVert);
     colStep = 1.0f / ((float) numBlocksHori);
+
+    blockLookup = { 
+        {"Top Grass", {1,0}},
+        {"Side Grass" , {0, 0}},
+        {"Dirt" , {0, 1}},
+        {"Stone", {1, 1}},
+
+    };
+}
+
+vector<pair<float, float>> TextureAtlas::getCoordsForBlock(const string& block)
+{
+
+    pair<float, float> RowCol;
+
+    auto it = blockLookup.find(block);
+    if (it == blockLookup.end())
+    {
+        println("'{}' not present in lookup... using default instead... (Top Grass)", block);
+        RowCol = blockLookup["Top Grass"];
+        return getCoordsForBlock(RowCol.first, RowCol.second);
+    }
+
+    RowCol = blockLookup[block];
+    return getCoordsForBlock(RowCol.first, RowCol.second);
 }
 
 vector<pair<float, float>> TextureAtlas::getCoordsForBlock(int row, int col)
