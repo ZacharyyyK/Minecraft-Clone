@@ -252,53 +252,101 @@ glm/fast:
 	$(MAKE) $(MAKESILENT) -f _deps\glm-build\glm\CMakeFiles\glm.dir\build.make _deps/glm-build/glm/CMakeFiles/glm.dir/build
 .PHONY : glm/fast
 
-src/cube/cube.obj: src/cube/cube.cpp.obj
-.PHONY : src/cube/cube.obj
+src/block/block.obj: src/block/block.cpp.obj
+.PHONY : src/block/block.obj
 
 # target to build an object file
-src/cube/cube.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj
-.PHONY : src/cube/cube.cpp.obj
+src/block/block.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/block/block.cpp.obj
+.PHONY : src/block/block.cpp.obj
 
-src/cube/cube.i: src/cube/cube.cpp.i
-.PHONY : src/cube/cube.i
+src/block/block.i: src/block/block.cpp.i
+.PHONY : src/block/block.i
 
 # target to preprocess a source file
-src/cube/cube.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/cube/cube.cpp.i
-.PHONY : src/cube/cube.cpp.i
+src/block/block.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/block/block.cpp.i
+.PHONY : src/block/block.cpp.i
 
-src/cube/cube.s: src/cube/cube.cpp.s
-.PHONY : src/cube/cube.s
+src/block/block.s: src/block/block.cpp.s
+.PHONY : src/block/block.s
 
 # target to generate assembly for a file
-src/cube/cube.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/cube/cube.cpp.s
-.PHONY : src/cube/cube.cpp.s
+src/block/block.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/block/block.cpp.s
+.PHONY : src/block/block.cpp.s
 
-src/grassblock/grass_block.obj: src/grassblock/grass_block.cpp.obj
-.PHONY : src/grassblock/grass_block.obj
+src/blockGenerator/blockGenerator.obj: src/blockGenerator/blockGenerator.cpp.obj
+.PHONY : src/blockGenerator/blockGenerator.obj
 
 # target to build an object file
-src/grassblock/grass_block.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj
-.PHONY : src/grassblock/grass_block.cpp.obj
+src/blockGenerator/blockGenerator.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj
+.PHONY : src/blockGenerator/blockGenerator.cpp.obj
 
-src/grassblock/grass_block.i: src/grassblock/grass_block.cpp.i
-.PHONY : src/grassblock/grass_block.i
+src/blockGenerator/blockGenerator.i: src/blockGenerator/blockGenerator.cpp.i
+.PHONY : src/blockGenerator/blockGenerator.i
 
 # target to preprocess a source file
-src/grassblock/grass_block.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.i
-.PHONY : src/grassblock/grass_block.cpp.i
+src/blockGenerator/blockGenerator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.i
+.PHONY : src/blockGenerator/blockGenerator.cpp.i
 
-src/grassblock/grass_block.s: src/grassblock/grass_block.cpp.s
-.PHONY : src/grassblock/grass_block.s
+src/blockGenerator/blockGenerator.s: src/blockGenerator/blockGenerator.cpp.s
+.PHONY : src/blockGenerator/blockGenerator.s
 
 # target to generate assembly for a file
-src/grassblock/grass_block.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.s
-.PHONY : src/grassblock/grass_block.cpp.s
+src/blockGenerator/blockGenerator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.s
+.PHONY : src/blockGenerator/blockGenerator.cpp.s
+
+src/chunk/chunk.obj: src/chunk/chunk.cpp.obj
+.PHONY : src/chunk/chunk.obj
+
+# target to build an object file
+src/chunk/chunk.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj
+.PHONY : src/chunk/chunk.cpp.obj
+
+src/chunk/chunk.i: src/chunk/chunk.cpp.i
+.PHONY : src/chunk/chunk.i
+
+# target to preprocess a source file
+src/chunk/chunk.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.i
+.PHONY : src/chunk/chunk.cpp.i
+
+src/chunk/chunk.s: src/chunk/chunk.cpp.s
+.PHONY : src/chunk/chunk.s
+
+# target to generate assembly for a file
+src/chunk/chunk.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.s
+.PHONY : src/chunk/chunk.cpp.s
+
+src/grassblock/grassBlock.obj: src/grassblock/grassBlock.cpp.obj
+.PHONY : src/grassblock/grassBlock.obj
+
+# target to build an object file
+src/grassblock/grassBlock.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj
+.PHONY : src/grassblock/grassBlock.cpp.obj
+
+src/grassblock/grassBlock.i: src/grassblock/grassBlock.cpp.i
+.PHONY : src/grassblock/grassBlock.i
+
+# target to preprocess a source file
+src/grassblock/grassBlock.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.i
+.PHONY : src/grassblock/grassBlock.cpp.i
+
+src/grassblock/grassBlock.s: src/grassblock/grassBlock.cpp.s
+.PHONY : src/grassblock/grassBlock.s
+
+# target to generate assembly for a file
+src/grassblock/grassBlock.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.s
+.PHONY : src/grassblock/grassBlock.cpp.s
 
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
@@ -444,6 +492,30 @@ src/vertex/vertex.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.s
 .PHONY : src/vertex/vertex.cpp.s
 
+src/voxelBlocks/voxelChunk.obj: src/voxelBlocks/voxelChunk.cpp.obj
+.PHONY : src/voxelBlocks/voxelChunk.obj
+
+# target to build an object file
+src/voxelBlocks/voxelChunk.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj
+.PHONY : src/voxelBlocks/voxelChunk.cpp.obj
+
+src/voxelBlocks/voxelChunk.i: src/voxelBlocks/voxelChunk.cpp.i
+.PHONY : src/voxelBlocks/voxelChunk.i
+
+# target to preprocess a source file
+src/voxelBlocks/voxelChunk.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.i
+.PHONY : src/voxelBlocks/voxelChunk.cpp.i
+
+src/voxelBlocks/voxelChunk.s: src/voxelBlocks/voxelChunk.cpp.s
+.PHONY : src/voxelBlocks/voxelChunk.s
+
+# target to generate assembly for a file
+src/voxelBlocks/voxelChunk.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.s
+.PHONY : src/voxelBlocks/voxelChunk.cpp.s
+
 src/window/window.obj: src/window/window.cpp.obj
 .PHONY : src/window/window.obj
 
@@ -487,12 +559,18 @@ help:
 	@echo ... glfw
 	@echo ... glm
 	@echo ... minecraft
-	@echo ... src/cube/cube.obj
-	@echo ... src/cube/cube.i
-	@echo ... src/cube/cube.s
-	@echo ... src/grassblock/grass_block.obj
-	@echo ... src/grassblock/grass_block.i
-	@echo ... src/grassblock/grass_block.s
+	@echo ... src/block/block.obj
+	@echo ... src/block/block.i
+	@echo ... src/block/block.s
+	@echo ... src/blockGenerator/blockGenerator.obj
+	@echo ... src/blockGenerator/blockGenerator.i
+	@echo ... src/blockGenerator/blockGenerator.s
+	@echo ... src/chunk/chunk.obj
+	@echo ... src/chunk/chunk.i
+	@echo ... src/chunk/chunk.s
+	@echo ... src/grassblock/grassBlock.obj
+	@echo ... src/grassblock/grassBlock.i
+	@echo ... src/grassblock/grassBlock.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
@@ -511,6 +589,9 @@ help:
 	@echo ... src/vertex/vertex.obj
 	@echo ... src/vertex/vertex.i
 	@echo ... src/vertex/vertex.s
+	@echo ... src/voxelBlocks/voxelChunk.obj
+	@echo ... src/voxelBlocks/voxelChunk.i
+	@echo ... src/voxelBlocks/voxelChunk.s
 	@echo ... src/window/window.obj
 	@echo ... src/window/window.i
 	@echo ... src/window/window.s

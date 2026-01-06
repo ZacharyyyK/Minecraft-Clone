@@ -8,14 +8,17 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/zacha/Projects/Minecraft/src/cube/cube.cpp" "CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj.d"
-  "C:/Users/zacha/Projects/Minecraft/src/grassblock/grass_block.cpp" "CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj.d"
+  "C:/Users/zacha/Projects/Minecraft/src/block/block.cpp" "CMakeFiles/minecraft.dir/src/block/block.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/block/block.cpp.obj.d"
+  "C:/Users/zacha/Projects/Minecraft/src/blockGenerator/blockGenerator.cpp" "CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj.d"
+  "C:/Users/zacha/Projects/Minecraft/src/chunk/chunk.cpp" "CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj.d"
+  "C:/Users/zacha/Projects/Minecraft/src/grassblock/grassBlock.cpp" "CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj.d"
   "C:/Users/zacha/Projects/Minecraft/src/main.cpp" "CMakeFiles/minecraft.dir/src/main.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/main.cpp.obj.d"
   "C:/Users/zacha/Projects/Minecraft/src/shaders/program.cpp" "CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj.d"
   "C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_define.cpp" "CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj.d"
   "C:/Users/zacha/Projects/Minecraft/src/textureAtlas/textureAtlas.cpp" "CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj.d"
   "C:/Users/zacha/Projects/Minecraft/src/triangle/triangle.cpp" "CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj.d"
   "C:/Users/zacha/Projects/Minecraft/src/vertex/vertex.cpp" "CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj.d"
+  "C:/Users/zacha/Projects/Minecraft/src/voxelBlocks/voxelChunk.cpp" "CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj.d"
   "C:/Users/zacha/Projects/Minecraft/src/window/window.cpp" "CMakeFiles/minecraft.dir/src/window/window.cpp.obj" "gcc" "CMakeFiles/minecraft.dir/src/window/window.cpp.obj.d"
   )
 

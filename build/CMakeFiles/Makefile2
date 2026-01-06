@@ -163,17 +163,17 @@ _deps/glm-build/glm/clean: _deps/glm-build/glm/CMakeFiles/glm.dir/clean
 # Target rules for target CMakeFiles/minecraft.dir
 
 # All Build rule for target.
-CMakeFiles/minecraft.dir/all: _deps/glfw-build/src/CMakeFiles/glfw.dir/all
 CMakeFiles/minecraft.dir/all: _deps/glm-build/glm/CMakeFiles/glm.dir/all
 CMakeFiles/minecraft.dir/all: _deps/glad-build/CMakeFiles/glad.dir/all
+CMakeFiles/minecraft.dir/all: _deps/glfw-build/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\minecraft.dir\build.make CMakeFiles/minecraft.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=29,30,31,32,33,34,35,36,37,38 "Built target minecraft"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=29,30,31,32,33,34,35,36,37,38,39,40,41 "Built target minecraft"
 .PHONY : CMakeFiles/minecraft.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/minecraft.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\zacha\Projects\Minecraft\build\CMakeFiles 38
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\zacha\Projects\Minecraft\build\CMakeFiles 41
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/minecraft.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\zacha\Projects\Minecraft\build\CMakeFiles 0
 .PHONY : CMakeFiles/minecraft.dir/rule
@@ -246,7 +246,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/clean:
 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/all:
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\update_mappings.dir\build.make _deps/glfw-build/src/CMakeFiles/update_mappings.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\update_mappings.dir\build.make _deps/glfw-build/src/CMakeFiles/update_mappings.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=39 "Built target update_mappings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=42 "Built target update_mappings"
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/all
 
 # Build rule for subdir invocation for target.

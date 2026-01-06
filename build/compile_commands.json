@@ -1,15 +1,27 @@
 [
 {
   "directory": "C:/Users/zacha/Projects/Minecraft/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\cube\\cube.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\cube\\cube.cpp",
-  "file": "C:/Users/zacha/Projects/Minecraft/src/cube/cube.cpp",
-  "output": "CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj"
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\block\\block.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\block\\block.cpp",
+  "file": "C:/Users/zacha/Projects/Minecraft/src/block/block.cpp",
+  "output": "CMakeFiles/minecraft.dir/src/block/block.cpp.obj"
 },
 {
   "directory": "C:/Users/zacha/Projects/Minecraft/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\grassblock\\grass_block.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\grassblock\\grass_block.cpp",
-  "file": "C:/Users/zacha/Projects/Minecraft/src/grassblock/grass_block.cpp",
-  "output": "CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj"
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\blockGenerator\\blockGenerator.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\blockGenerator\\blockGenerator.cpp",
+  "file": "C:/Users/zacha/Projects/Minecraft/src/blockGenerator/blockGenerator.cpp",
+  "output": "CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj"
+},
+{
+  "directory": "C:/Users/zacha/Projects/Minecraft/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\chunk\\chunk.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\chunk\\chunk.cpp",
+  "file": "C:/Users/zacha/Projects/Minecraft/src/chunk/chunk.cpp",
+  "output": "CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj"
+},
+{
+  "directory": "C:/Users/zacha/Projects/Minecraft/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\grassblock\\grassBlock.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\grassblock\\grassBlock.cpp",
+  "file": "C:/Users/zacha/Projects/Minecraft/src/grassblock/grassBlock.cpp",
+  "output": "CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj"
 },
 {
   "directory": "C:/Users/zacha/Projects/Minecraft/build",
@@ -46,6 +58,12 @@
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\vertex\\vertex.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\vertex\\vertex.cpp",
   "file": "C:/Users/zacha/Projects/Minecraft/src/vertex/vertex.cpp",
   "output": "CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj"
+},
+{
+  "directory": "C:/Users/zacha/Projects/Minecraft/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/minecraft.dir/includes_CXX.rsp -g -std=c++23 -o CMakeFiles\\minecraft.dir\\src\\voxelBlocks\\voxelChunk.cpp.obj -c C:\\Users\\zacha\\Projects\\Minecraft\\src\\voxelBlocks\\voxelChunk.cpp",
+  "file": "C:/Users/zacha/Projects/Minecraft/src/voxelBlocks/voxelChunk.cpp",
+  "output": "CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj"
 },
 {
   "directory": "C:/Users/zacha/Projects/Minecraft/build",

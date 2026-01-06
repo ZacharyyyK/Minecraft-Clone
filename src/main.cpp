@@ -13,9 +13,10 @@
 #include "triangle/triangle.h"
 #include "shaders/program.h"
 #include "camera/camera.h"
-#include "cube/cube.h"
+#include "block/block.h"
 #include "grassblock/grassBlock.h"
 #include "textureAtlas/textureAtlas.h"
+#include "voxelBlocks/voxelChunk.h"
 
 int WIDTH = 1200;
 int HEIGHT = 800;
@@ -113,7 +114,7 @@ int main()
     Program p("src/shaders/vertexShader.vert", "src/shaders/fragmentShader.frag");
     // TextureAtlas("src/textures/TextureAtlas.png", 4, 4);
 
-    Triangle tri(Vertex(-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f), Vertex(0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f), Vertex(0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f));
+    // Triangle tri(Vertex(-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f), Vertex(0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f), Vertex(0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f));
 
     glm::mat4 perspectiveMat = camera.getPerspective();
     p.SetMat4Uniform("perspective", perspectiveMat);
@@ -122,11 +123,13 @@ int main()
 
     TextureAtlas TA(2, 2);
     // std::vector<std::pair<float, float>> sideGrassCoords = TA.getCoordsForBlock(0,0);
-    auto sideGrassCoords = TA.getCoordsForBlock("Side Grass");
-    auto botGrassCords = TA.getCoordsForBlock(0, 1);
-    auto topGrassCords = TA.getCoordsForBlock(1,0);
+    // auto sideGrassCoords = TA.getCoordsForBlock("Side Grass");
+    // auto botGrassCords = TA.getCoordsForBlock(0, 1);
+    // auto topGrassCords = TA.getCoordsForBlock(1,0);
 
-    GrassBlock cube(sideGrassCoords, botGrassCords, topGrassCords);
+    // GrassBlock cube(sideGrassCoords, botGrassCords, topGrassCords);
+
+    Chunk chunk;
 
     while(!window.shouldClose())
     {
@@ -138,7 +141,8 @@ int main()
         p.SetMat4Uniform("view", view);
 
         // tri.draw();
-        cube.draw();
+        // cube.draw();
+        chunk.draw();
 
         window.swapBuffers();
         window.pollEvents();

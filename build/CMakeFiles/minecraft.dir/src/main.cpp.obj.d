@@ -367,9 +367,9 @@ CMakeFiles/minecraft.dir/src/main.cpp.obj: \
  C:/Users/zacha/Projects/Minecraft/build/_deps/glm-src/glm/detail/func_integer.inl \
  C:\Users\zacha\Projects\Minecraft\src\camera/camera.h \
  C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h \
- C:\Users\zacha\Projects\Minecraft\src\cube/cube.h \
+ C:\Users\zacha\Projects\Minecraft\src\block/block.h \
  C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h \
- C:\Users\zacha\Projects\Minecraft\src\grassblock/grass_block.h \
+ C:\Users\zacha\Projects\Minecraft\src\grassblock/grassBlock.h \
  C:\Users\zacha\Projects\Minecraft\src\textureAtlas/textureAtlas.h \
  C:/msys64/ucrt64/include/c++/15.2.0/unordered_map \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/unordered_map.h \
@@ -378,4 +378,10 @@ CMakeFiles/minecraft.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.2.0/ext/aligned_buffer.h \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/node_handle.h \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/erase_if.h \
+ C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h \
+ C:\Users\zacha\Projects\Minecraft\src\voxelBlocks/voxelChunk.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/functional \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/std_function.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/move_only_function.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/mofunc_impl.h \
  C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h

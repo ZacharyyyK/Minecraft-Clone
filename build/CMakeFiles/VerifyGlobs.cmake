@@ -5,14 +5,17 @@ cmake_policy(SET CMP0009 NEW)
 # SRC_FILES at CMakeLists.txt:43 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/zacha/Projects/Minecraft/src/*.cpp")
 set(OLD_GLOB
-  "C:/Users/zacha/Projects/Minecraft/src/cube/cube.cpp"
-  "C:/Users/zacha/Projects/Minecraft/src/grassblock/grass_block.cpp"
+  "C:/Users/zacha/Projects/Minecraft/src/block/block.cpp"
+  "C:/Users/zacha/Projects/Minecraft/src/blockGenerator/blockGenerator.cpp"
+  "C:/Users/zacha/Projects/Minecraft/src/chunk/chunk.cpp"
+  "C:/Users/zacha/Projects/Minecraft/src/grassblock/grassBlock.cpp"
   "C:/Users/zacha/Projects/Minecraft/src/main.cpp"
   "C:/Users/zacha/Projects/Minecraft/src/shaders/program.cpp"
   "C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_define.cpp"
   "C:/Users/zacha/Projects/Minecraft/src/textureAtlas/textureAtlas.cpp"
   "C:/Users/zacha/Projects/Minecraft/src/triangle/triangle.cpp"
   "C:/Users/zacha/Projects/Minecraft/src/vertex/vertex.cpp"
+  "C:/Users/zacha/Projects/Minecraft/src/voxelBlocks/voxelChunk.cpp"
   "C:/Users/zacha/Projects/Minecraft/src/window/window.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -23,15 +26,19 @@ endif()
 # SRC_FILES at CMakeLists.txt:43 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/zacha/Projects/Minecraft/src/*.h")
 set(OLD_GLOB
+  "C:/Users/zacha/Projects/Minecraft/src/block/block.h"
+  "C:/Users/zacha/Projects/Minecraft/src/blockGenerator/blockGenerator.h"
   "C:/Users/zacha/Projects/Minecraft/src/camera/camera.h"
-  "C:/Users/zacha/Projects/Minecraft/src/cube/cube.h"
-  "C:/Users/zacha/Projects/Minecraft/src/grassblock/grass_block.h"
+  "C:/Users/zacha/Projects/Minecraft/src/chunk/chunk.h"
+  "C:/Users/zacha/Projects/Minecraft/src/grassblock/grassBlock.h"
   "C:/Users/zacha/Projects/Minecraft/src/shaders/program.h"
   "C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_image.h"
   "C:/Users/zacha/Projects/Minecraft/src/textureAtlas/textureAtlas.h"
   "C:/Users/zacha/Projects/Minecraft/src/triangle/triangle.h"
   "C:/Users/zacha/Projects/Minecraft/src/vertex/vertex.h"
+  "C:/Users/zacha/Projects/Minecraft/src/voxelBlocks/voxelChunk.h"
   "C:/Users/zacha/Projects/Minecraft/src/window/window.h"
+  "C:/Users/zacha/Projects/Minecraft/src/world/world.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

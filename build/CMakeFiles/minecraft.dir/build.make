@@ -68,41 +68,71 @@ include CMakeFiles/minecraft.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/minecraft.dir/flags.make
 
-CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj: CMakeFiles/minecraft.dir/flags.make
-CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
-CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/cube/cube.cpp
-CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj -MF CMakeFiles\minecraft.dir\src\cube\cube.cpp.obj.d -o CMakeFiles\minecraft.dir\src\cube\cube.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\cube\cube.cpp
+CMakeFiles/minecraft.dir/src/block/block.cpp.obj: CMakeFiles/minecraft.dir/flags.make
+CMakeFiles/minecraft.dir/src/block/block.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
+CMakeFiles/minecraft.dir/src/block/block.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/block/block.cpp
+CMakeFiles/minecraft.dir/src/block/block.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/minecraft.dir/src/block/block.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/block/block.cpp.obj -MF CMakeFiles\minecraft.dir\src\block\block.cpp.obj.d -o CMakeFiles\minecraft.dir\src\block\block.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\block\block.cpp
 
-CMakeFiles/minecraft.dir/src/cube/cube.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/minecraft.dir/src/cube/cube.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zacha\Projects\Minecraft\src\cube\cube.cpp > CMakeFiles\minecraft.dir\src\cube\cube.cpp.i
+CMakeFiles/minecraft.dir/src/block/block.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/minecraft.dir/src/block/block.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zacha\Projects\Minecraft\src\block\block.cpp > CMakeFiles\minecraft.dir\src\block\block.cpp.i
 
-CMakeFiles/minecraft.dir/src/cube/cube.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/cube/cube.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\cube\cube.cpp -o CMakeFiles\minecraft.dir\src\cube\cube.cpp.s
+CMakeFiles/minecraft.dir/src/block/block.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/block/block.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\block\block.cpp -o CMakeFiles\minecraft.dir\src\block\block.cpp.s
 
-CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj: CMakeFiles/minecraft.dir/flags.make
-CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
-CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/grassblock/grass_block.cpp
-CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj -MF CMakeFiles\minecraft.dir\src\grassblock\grass_block.cpp.obj.d -o CMakeFiles\minecraft.dir\src\grassblock\grass_block.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\grassblock\grass_block.cpp
+CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj: CMakeFiles/minecraft.dir/flags.make
+CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
+CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/blockGenerator/blockGenerator.cpp
+CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj -MF CMakeFiles\minecraft.dir\src\blockGenerator\blockGenerator.cpp.obj.d -o CMakeFiles\minecraft.dir\src\blockGenerator\blockGenerator.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\blockGenerator\blockGenerator.cpp
 
-CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zacha\Projects\Minecraft\src\grassblock\grass_block.cpp > CMakeFiles\minecraft.dir\src\grassblock\grass_block.cpp.i
+CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zacha\Projects\Minecraft\src\blockGenerator\blockGenerator.cpp > CMakeFiles\minecraft.dir\src\blockGenerator\blockGenerator.cpp.i
 
-CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\grassblock\grass_block.cpp -o CMakeFiles\minecraft.dir\src\grassblock\grass_block.cpp.s
+CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\blockGenerator\blockGenerator.cpp -o CMakeFiles\minecraft.dir\src\blockGenerator\blockGenerator.cpp.s
+
+CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj: CMakeFiles/minecraft.dir/flags.make
+CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
+CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/chunk/chunk.cpp
+CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj -MF CMakeFiles\minecraft.dir\src\chunk\chunk.cpp.obj.d -o CMakeFiles\minecraft.dir\src\chunk\chunk.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\chunk\chunk.cpp
+
+CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zacha\Projects\Minecraft\src\chunk\chunk.cpp > CMakeFiles\minecraft.dir\src\chunk\chunk.cpp.i
+
+CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\chunk\chunk.cpp -o CMakeFiles\minecraft.dir\src\chunk\chunk.cpp.s
+
+CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj: CMakeFiles/minecraft.dir/flags.make
+CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
+CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/grassblock/grassBlock.cpp
+CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj -MF CMakeFiles\minecraft.dir\src\grassblock\grassBlock.cpp.obj.d -o CMakeFiles\minecraft.dir\src\grassblock\grassBlock.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\grassblock\grassBlock.cpp
+
+CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zacha\Projects\Minecraft\src\grassblock\grassBlock.cpp > CMakeFiles\minecraft.dir\src\grassblock\grassBlock.cpp.i
+
+CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\grassblock\grassBlock.cpp -o CMakeFiles\minecraft.dir\src\grassblock\grassBlock.cpp.s
 
 CMakeFiles/minecraft.dir/src/main.cpp.obj: CMakeFiles/minecraft.dir/flags.make
 CMakeFiles/minecraft.dir/src/main.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
 CMakeFiles/minecraft.dir/src/main.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/main.cpp
 CMakeFiles/minecraft.dir/src/main.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/minecraft.dir/src/main.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/minecraft.dir/src/main.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/main.cpp.obj -MF CMakeFiles\minecraft.dir\src\main.cpp.obj.d -o CMakeFiles\minecraft.dir\src\main.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\main.cpp
 
 CMakeFiles/minecraft.dir/src/main.cpp.i: cmake_force
@@ -117,7 +147,7 @@ CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj: CMakeFiles/minecraft.dir/f
 CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
 CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/shaders/program.cpp
 CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj -MF CMakeFiles\minecraft.dir\src\shaders\program.cpp.obj.d -o CMakeFiles\minecraft.dir\src\shaders\program.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\shaders\program.cpp
 
 CMakeFiles/minecraft.dir/src/shaders/program.cpp.i: cmake_force
@@ -132,7 +162,7 @@ CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj: CMakeFiles/minecraft.
 CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
 CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/stb_image/stb_define.cpp
 CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj -MF CMakeFiles\minecraft.dir\src\stb_image\stb_define.cpp.obj.d -o CMakeFiles\minecraft.dir\src\stb_image\stb_define.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\stb_image\stb_define.cpp
 
 CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.i: cmake_force
@@ -147,7 +177,7 @@ CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj: CMakeFiles/minec
 CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
 CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/textureAtlas/textureAtlas.cpp
 CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj -MF CMakeFiles\minecraft.dir\src\textureAtlas\textureAtlas.cpp.obj.d -o CMakeFiles\minecraft.dir\src\textureAtlas\textureAtlas.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\textureAtlas\textureAtlas.cpp
 
 CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.i: cmake_force
@@ -162,7 +192,7 @@ CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj: CMakeFiles/minecraft.dir
 CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
 CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/triangle/triangle.cpp
 CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj -MF CMakeFiles\minecraft.dir\src\triangle\triangle.cpp.obj.d -o CMakeFiles\minecraft.dir\src\triangle\triangle.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\triangle\triangle.cpp
 
 CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.i: cmake_force
@@ -177,7 +207,7 @@ CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj: CMakeFiles/minecraft.dir/fla
 CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
 CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/vertex/vertex.cpp
 CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj -MF CMakeFiles\minecraft.dir\src\vertex\vertex.cpp.obj.d -o CMakeFiles\minecraft.dir\src\vertex\vertex.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\vertex\vertex.cpp
 
 CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.i: cmake_force
@@ -188,11 +218,26 @@ CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.s"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\vertex\vertex.cpp -o CMakeFiles\minecraft.dir\src\vertex\vertex.cpp.s
 
+CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj: CMakeFiles/minecraft.dir/flags.make
+CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
+CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/voxelBlocks/voxelChunk.cpp
+CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj -MF CMakeFiles\minecraft.dir\src\voxelBlocks\voxelChunk.cpp.obj.d -o CMakeFiles\minecraft.dir\src\voxelBlocks\voxelChunk.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\voxelBlocks\voxelChunk.cpp
+
+CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zacha\Projects\Minecraft\src\voxelBlocks\voxelChunk.cpp > CMakeFiles\minecraft.dir\src\voxelBlocks\voxelChunk.cpp.i
+
+CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zacha\Projects\Minecraft\src\voxelBlocks\voxelChunk.cpp -o CMakeFiles\minecraft.dir\src\voxelBlocks\voxelChunk.cpp.s
+
 CMakeFiles/minecraft.dir/src/window/window.cpp.obj: CMakeFiles/minecraft.dir/flags.make
 CMakeFiles/minecraft.dir/src/window/window.cpp.obj: CMakeFiles/minecraft.dir/includes_CXX.rsp
 CMakeFiles/minecraft.dir/src/window/window.cpp.obj: C:/Users/zacha/Projects/Minecraft/src/window/window.cpp
 CMakeFiles/minecraft.dir/src/window/window.cpp.obj: CMakeFiles/minecraft.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/minecraft.dir/src/window/window.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/minecraft.dir/src/window/window.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/minecraft.dir/src/window/window.cpp.obj -MF CMakeFiles\minecraft.dir\src\window\window.cpp.obj.d -o CMakeFiles\minecraft.dir\src\window\window.cpp.obj -c C:\Users\zacha\Projects\Minecraft\src\window\window.cpp
 
 CMakeFiles/minecraft.dir/src/window/window.cpp.i: cmake_force
@@ -205,27 +250,33 @@ CMakeFiles/minecraft.dir/src/window/window.cpp.s: cmake_force
 
 # Object files for target minecraft
 minecraft_OBJECTS = \
-"CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj" \
-"CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj" \
+"CMakeFiles/minecraft.dir/src/block/block.cpp.obj" \
+"CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj" \
+"CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj" \
+"CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj" \
 "CMakeFiles/minecraft.dir/src/main.cpp.obj" \
 "CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj" \
 "CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj" \
 "CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj" \
 "CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj" \
 "CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj" \
+"CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj" \
 "CMakeFiles/minecraft.dir/src/window/window.cpp.obj"
 
 # External object files for target minecraft
 minecraft_EXTERNAL_OBJECTS =
 
-minecraft.exe: CMakeFiles/minecraft.dir/src/cube/cube.cpp.obj
-minecraft.exe: CMakeFiles/minecraft.dir/src/grassblock/grass_block.cpp.obj
+minecraft.exe: CMakeFiles/minecraft.dir/src/block/block.cpp.obj
+minecraft.exe: CMakeFiles/minecraft.dir/src/blockGenerator/blockGenerator.cpp.obj
+minecraft.exe: CMakeFiles/minecraft.dir/src/chunk/chunk.cpp.obj
+minecraft.exe: CMakeFiles/minecraft.dir/src/grassblock/grassBlock.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/src/main.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/src/shaders/program.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/src/stb_image/stb_define.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/src/textureAtlas/textureAtlas.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/src/triangle/triangle.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/src/vertex/vertex.cpp.obj
+minecraft.exe: CMakeFiles/minecraft.dir/src/voxelBlocks/voxelChunk.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/src/window/window.cpp.obj
 minecraft.exe: CMakeFiles/minecraft.dir/build.make
 minecraft.exe: _deps/glfw-build/src/libglfw3.a
@@ -234,7 +285,7 @@ minecraft.exe: _deps/glm-build/glm/libglm.a
 minecraft.exe: CMakeFiles/minecraft.dir/linkLibs.rsp
 minecraft.exe: CMakeFiles/minecraft.dir/objects1.rsp
 minecraft.exe: CMakeFiles/minecraft.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable minecraft.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\zacha\Projects\Minecraft\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable minecraft.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\minecraft.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
