@@ -24,7 +24,7 @@ Chunk::Chunk(){
                     float _y = (float) y;
                     float _z = (float) z;
 
-                    // XY - Plane Face (Only change x and z)
+                    // XY - Plane Face (Only change x and y)
                     vector<GLfloat> subVerts(20);
                     vector<GLuint> subIndexs(6);
 
@@ -44,7 +44,7 @@ Chunk::Chunk(){
                     vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
                     indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
 
-                    // 
+                    // XY - Opposite Plane Face
                     subVerts = {
                         _x          , _y        ,   _z + 0.5f, 0.0f, 0.0f,
                         _x + 0.5f   , _y        ,   _z + 0.5f, 1.0f , 0.0f,
@@ -59,6 +59,78 @@ Chunk::Chunk(){
 
                     strt_idx += 4;
                     
+                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
+                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
+
+                    // XZ - Plane Face (Only change x and z)
+            
+                    subVerts = {
+                        _x          , _y        ,   _z         , 0.0f, 0.0f,
+                        _x + 0.5f   , _y        ,   _z         , 1.0f, 0.0f,
+                        _x + 0.5f   , _y        ,   _z  + 0.5f , 1.0f, 1.0f,
+                        _x          , _y        ,   _z  + 0.5f , 0.0f, 1.0f,
+                    };
+
+                    subIndexs = {
+                        strt_idx, strt_idx+1, strt_idx+2,
+                        strt_idx+2, strt_idx+3, strt_idx,
+                    };
+
+                    strt_idx += 4;
+                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
+                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
+
+                    // XZ - Opposite Plane Face (Only change x and z)
+            
+                    subVerts = {
+                        _x          , _y + 0.5f       ,   _z         , 0.0f, 0.0f,
+                        _x + 0.5f   , _y + 0.5f       ,   _z         , 1.0f, 0.0f,
+                        _x + 0.5f   , _y + 0.5f       ,   _z  + 0.5f , 1.0f, 1.0f,
+                        _x          , _y + 0.5f       ,   _z  + 0.5f , 0.0f, 1.0f,
+                    };
+
+                    subIndexs = {
+                        strt_idx, strt_idx+1, strt_idx+2,
+                        strt_idx+2, strt_idx+3, strt_idx,
+                    };
+
+                    strt_idx += 4;
+                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
+                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
+
+                    // YZ Plane Face (Only change y and z)
+            
+                    subVerts = {
+                        _x          , _y              ,   _z         , 0.0f, 0.0f,
+                        _x          , _y + 0.5f       ,   _z         , 1.0f, 0.0f,
+                        _x          , _y + 0.5f       ,   _z + 0.5f  , 1.0f, 1.0f,
+                        _x          , _y              ,   _z + 0.5f  , 0.0f, 1.0f,
+                    };
+
+                    subIndexs = {
+                        strt_idx, strt_idx+1, strt_idx+2,
+                        strt_idx+2, strt_idx+3, strt_idx,
+                    };
+
+                    strt_idx += 4;
+                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
+                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
+
+                    // YZ - Opposite Plane Face (Only change y and z)
+            
+                    subVerts = {
+                        _x + 0.5f         , _y              ,   _z         , 0.0f, 0.0f,
+                        _x + 0.5f         , _y + 0.5f       ,   _z         , 1.0f, 0.0f,
+                        _x + 0.5f         , _y + 0.5f       ,   _z + 0.5f  , 1.0f, 1.0f,
+                        _x + 0.5f         , _y              ,   _z + 0.5f  , 0.0f, 1.0f,
+                    };
+
+                    subIndexs = {
+                        strt_idx, strt_idx+1, strt_idx+2,
+                        strt_idx+2, strt_idx+3, strt_idx,
+                    };
+
+                    strt_idx += 4;
                     vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
                     indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
 
