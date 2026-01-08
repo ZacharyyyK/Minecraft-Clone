@@ -88,6 +88,8 @@ private:
 
     TextureAtlas TA;
 
+    GLuint blocksThatCanBeSeen;
+
     // Look up of faces
     unordered_map<BlockID, array<UVQuad, 6>> uvLookup;
 

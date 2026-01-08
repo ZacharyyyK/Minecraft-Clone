@@ -11,6 +11,7 @@ Chunk::Chunk(){
     vertices.reserve(CHUNKVOLUME * 24);
     indicies.reserve(CHUNKVOLUME * 36);
 
+    GLuint strt_idx = 0;
     for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
     {
         for (GLuint x = 0; x < CHUNKSIZE_X; ++x)
@@ -20,11 +21,17 @@ Chunk::Chunk(){
             {
                 size_t idx = index(x, y, z);
 
-                if (y >= 0 && y < 16)
+                if (y >= 0 && y <= 16){
                     blocks.at(idx) = GRASS;
-
+                }
                 else blocks.at(idx) = AIR;       
                 
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
                 // break;
             }
                   
@@ -32,6 +39,7 @@ Chunk::Chunk(){
         }
         // break;
     }
+
 
     storeUVQuadsInLookup();
     sendData();
@@ -83,18 +91,38 @@ void Chunk::initBuffersAndTextures()
 
 bool Chunk::isExposed(GLuint x, GLuint y, GLuint z)
 {
-    
+
+    // return true;
+
+    if (x == 0 || (x == CHUNKSIZE_X - 1)) return true;
+    if (y == 0 || (y == CHUNKSIZE_Y - 1)) return true;
+    if (z == 0 || (z == CHUNKSIZE_Z - 1)) return true;
+
+    // Check if top, bottom, right, left, front, back connected to air
+    size_t topIdx = index(x, y+1, z);
+    size_t botIdx = index(x, y-1, z);
+    size_t frtIdx = index(x, y, z+1);
+    size_t bckIdx = index(x, y, z-1);
+    size_t lftIdx = index(x-1, y, z);
+    size_t rgtIdx = index(x+1, y, z);
+
+    if(blocks[topIdx] == AIR || blocks[botIdx] == AIR || blocks[frtIdx] == AIR || blocks[bckIdx] == AIR || blocks[lftIdx] == AIR || blocks[rgtIdx] == AIR)
+        return true;
+
+    return false;
 }
 
 void Chunk::sendData(){
 
     vertices.clear();
-    indicies.clear();
+    // indicies.clear();
 
     GLuint strt_idx = 0;
 
     float _x, _y, _z;
     _x = 0; _y = 0; _z = 0;
+
+    blocksThatCanBeSeen = 0;
 
     for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
     {
@@ -109,8 +137,10 @@ void Chunk::sendData(){
                 if (blocks.at(idx) == AIR) 
                     continue;
 
-                if (!isExposed(x, y, z));
+                if (!isExposed(x, y, z)) continue;
  
+                ++blocksThatCanBeSeen;
+
                 const array< UVQuad , 6>& uvCoords = getUVCoordsForFaces(blocks.at(idx));
 
                 // XY - Plane Face (BACK FACE)
@@ -119,7 +149,7 @@ void Chunk::sendData(){
                 pushVertex(_x + 0.25f, _y,         _z,         _backFace[BOTTOM_RIGHT].first, _backFace[BOTTOM_RIGHT].second);
                 pushVertex(_x + 0.25f, _y + 0.25f, _z,         _backFace[TOP_RIGHT].first,    _backFace[TOP_RIGHT].second);
                 pushVertex(_x,         _y + 0.25f, _z,         _backFace[TOP_LEFT].first,     _backFace[TOP_LEFT].second);
-                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
 
                 // XY - Opposite Plane Face (FRONT FACE)
                 const UVQuad& _frontFace = uvCoords[FRONT_FACE];
@@ -127,7 +157,7 @@ void Chunk::sendData(){
                 pushVertex(_x + 0.25f, _y,         _z+0.25f,  _frontFace[BOTTOM_RIGHT].first, _frontFace[BOTTOM_RIGHT].second);
                 pushVertex(_x + 0.25f, _y + 0.25f, _z+0.25f,  _frontFace[TOP_RIGHT].first,    _frontFace[TOP_RIGHT].second);
                 pushVertex(_x,         _y + 0.25f, _z+0.25f,  _frontFace[TOP_LEFT].first,     _frontFace[TOP_LEFT].second);
-                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
 
                 // XZ - Plane Face (BOTTOM FACE)
                 const UVQuad& _bottomFace = uvCoords[BOTTOM_FACE];
@@ -135,7 +165,7 @@ void Chunk::sendData(){
                 pushVertex(_x + 0.25f, _y, _z,         _bottomFace[BOTTOM_RIGHT].first, _bottomFace[BOTTOM_RIGHT].second);
                 pushVertex(_x + 0.25f, _y, _z + 0.25f, _bottomFace[TOP_RIGHT].first,    _bottomFace[TOP_RIGHT].second);
                 pushVertex(_x,         _y, _z + 0.25f, _bottomFace[TOP_LEFT].first,     _bottomFace[TOP_LEFT].second);
-                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
 
                 // XZ - Opposite Plane Face (TOP FACE)
                 const UVQuad& _topFace = uvCoords[TOP_FACE];
@@ -143,7 +173,7 @@ void Chunk::sendData(){
                 pushVertex(_x + 0.25f, _y+0.25f, _z,         _topFace[BOTTOM_RIGHT].first, _topFace[BOTTOM_RIGHT].second);
                 pushVertex(_x + 0.25f, _y+0.25f, _z + 0.25f, _topFace[TOP_RIGHT].first,    _topFace[TOP_RIGHT].second);
                 pushVertex(_x,         _y+0.25f, _z + 0.25f, _topFace[TOP_LEFT].first,     _topFace[TOP_LEFT].second);
-                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
 
                 // YZ - Plane Face (LEFT FACE)
                 const UVQuad& _leftFace = uvCoords[LEFT_FACE];
@@ -151,7 +181,7 @@ void Chunk::sendData(){
                 pushVertex(_x, _y+0.25f,   _z,         _leftFace[TOP_LEFT].first, _leftFace[TOP_LEFT].second); 
                 pushVertex(_x, _y+0.25f, _z+0.25f,     _leftFace[TOP_RIGHT].first,    _leftFace[TOP_RIGHT].second);
                 pushVertex(_x, _y,       _z+0.25f,     _leftFace[BOTTOM_RIGHT].first,     _leftFace[BOTTOM_RIGHT].second); 
-                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
 
                 // YZ - Opposite Plane Face (RIGHT FACE)
                 const UVQuad& _rightFace = uvCoords[RIGHT_FACE];
@@ -159,7 +189,7 @@ void Chunk::sendData(){
                 pushVertex(_x+0.25f, _y+0.25f,   _z,         _rightFace[TOP_LEFT].first, _rightFace[TOP_LEFT].second);
                 pushVertex(_x+0.25f, _y+0.25f, _z+0.25f,     _rightFace[TOP_RIGHT].first,    _rightFace[TOP_RIGHT].second);
                 pushVertex(_x+0.25f, _y,       _z+0.25f,     _rightFace[BOTTOM_RIGHT].first,     _rightFace[BOTTOM_RIGHT].second);
-                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
 
             
                 _z += 0.25f;
@@ -237,7 +267,7 @@ void Chunk::draw()
     glBindTexture(GL_TEXTURE_2D, TEXTURE);
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indicies.size(), GL_UNSIGNED_INT, (void*) 0);
+    glDrawElements(GL_TRIANGLES, blocksThatCanBeSeen * 36, GL_UNSIGNED_INT, (void*) 0);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
