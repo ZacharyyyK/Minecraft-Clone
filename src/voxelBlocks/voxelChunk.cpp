@@ -126,12 +126,13 @@ void Chunk::sendData(){
 
     for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
     {
-        _x = 0;
+        _y = float(y) * 0.25f;
         for (GLuint x = 0; x < CHUNKSIZE_X; ++x)
         {
-            _z = 0;
+            _x = float(x) * 0.25f;
             for (GLuint z = 0; z < CHUNKSIZE_Z; ++z)
             {
+                _z = float(z) * 0.25f;
                 size_t idx = index(x, y,  z);
 
                 if (blocks.at(idx) == AIR) 
@@ -190,16 +191,11 @@ void Chunk::sendData(){
                 pushVertex(_x+0.25f, _y+0.25f, _z+0.25f,     _rightFace[TOP_RIGHT].first,    _rightFace[TOP_RIGHT].second);
                 pushVertex(_x+0.25f, _y,       _z+0.25f,     _rightFace[BOTTOM_RIGHT].first,     _rightFace[BOTTOM_RIGHT].second);
                 // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
-
-            
-                _z += 0.25f;
                 // break;
             }
-            
-            _x += 0.25f;
+        
             // break;
         }
-        _y += 0.25f;
         // break;
     }
 
