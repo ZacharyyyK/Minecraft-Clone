@@ -81,6 +81,11 @@ void Chunk::initBuffersAndTextures()
     stbi_image_free(data);
 }
 
+bool Chunk::isExposed(GLuint x, GLuint y, GLuint z)
+{
+    
+}
+
 void Chunk::sendData(){
 
     vertices.clear();
@@ -103,6 +108,8 @@ void Chunk::sendData(){
 
                 if (blocks.at(idx) == AIR) 
                     continue;
+
+                if (!isExposed(x, y, z));
  
                 const array< UVQuad , 6>& uvCoords = getUVCoordsForFaces(blocks.at(idx));
 

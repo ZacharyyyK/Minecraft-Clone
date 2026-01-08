@@ -100,7 +100,7 @@ private:
     void initBuffersAndTextures();
     void storeUVQuadsInLookup();
     void sendData();
-    bool isExposed();
+    bool isExposed(GLuint x, GLuint y, GLuint z);
 };
 
 struct ChunkCoordHash
