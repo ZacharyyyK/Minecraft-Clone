@@ -107,7 +107,7 @@ Block::Block()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Block::setFaceUVs(int faceIndex, const std::vector<std::pair<float, float>>& uvs)
+void Block::setFaceUVs(int faceIndex, const std::array<std::pair<float, float>, 4>& uvs)
 {
     int beginIdx = faceIndex * 4 * 5;
 

@@ -1,20 +1,43 @@
 # include "textureAtlas.h"
 
+TextureAtlas::TextureAtlas() 
+{
+    setDims(WIDTH_OF_ATLAS, HEIGHT_OF_ATLAS);
+    setSteps();
+    setAtlas();
+}
+
 TextureAtlas::TextureAtlas(int numBlocksHori, int numBlocksVert) : horiBlocks(numBlocksHori), vertBlocks(numBlocksVert)
 {
-    rowStep = 1.0f / ((float) numBlocksVert);
-    colStep = 1.0f / ((float) numBlocksHori);
+    setDims(numBlocksHori, numBlocksVert);
+    setSteps();
+    setAtlas();
+}
 
-    blockLookup = { 
+void TextureAtlas::setDims(int numBlocksHori, int numBlocksVert) 
+{
+    horiBlocks = numBlocksHori;
+    vertBlocks = numBlocksVert;
+}
+
+void TextureAtlas::setSteps()
+{
+    rowStep = 1.0f / ((float) horiBlocks);
+    colStep = 1.0f / ((float) vertBlocks);
+}
+
+void TextureAtlas::setAtlas()
+{
+   blockLookup = { 
         {"Top Grass", {1,0}},
         {"Side Grass" , {0, 0}},
         {"Dirt" , {0, 1}},
         {"Stone", {1, 1}},
 
-    };
+    }; 
 }
 
-vector<pair<float, float>> TextureAtlas::getCoordsForBlock(const string& block)
+array<pair<float, float>, 4> TextureAtlas::getCoordsForBlock(const string& block)
 {
 
     pair<float, float> RowCol;
@@ -31,7 +54,7 @@ vector<pair<float, float>> TextureAtlas::getCoordsForBlock(const string& block)
     return getCoordsForBlock(RowCol.first, RowCol.second);
 }
 
-vector<pair<float, float>> TextureAtlas::getCoordsForBlock(int row, int col)
+array<pair<float, float>, 4> TextureAtlas::getCoordsForBlock(int row, int col)
 {
     float fRow = (float) row;
     float fCol = (float) col;

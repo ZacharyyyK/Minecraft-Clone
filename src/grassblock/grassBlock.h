@@ -5,7 +5,7 @@
 class GrassBlock : public Block
 {
 public:
-    GrassBlock(const std::vector<std::pair<float, float>>& uvCoordsSide, const std::vector<std::pair<float, float>>& uvCoordsBottom, const std::vector<std::pair<float, float>>& uvCoordsTop);
+    GrassBlock(const std::array<std::pair<float, float>, 4>& uvCoordsSide, const std::array<std::pair<float, float>, 4>& uvCoordsBottom, const std::array<std::pair<float, float>, 4>& uvCoordsTop);
     ~GrassBlock();
 private:
 };

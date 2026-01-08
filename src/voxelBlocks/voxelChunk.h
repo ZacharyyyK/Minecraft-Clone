@@ -8,10 +8,15 @@
 # include <array>
 # include <stdint.h>
 # include <functional>
+# include <print>
 
 # include "../stb_image/stb_image.h"
+# include "../textureAtlas/textureAtlas.h"
 
-using std::vector, std::array;
+using std::vector, std::array, std::pair, std::unordered_map;
+
+using UV = pair<float, float>;
+using UVQuad = array<UV, 4>;
 
 const GLuint CHUNKSIZE_X = 16;
 const GLuint CHUNKSIZE_Y = 256;
@@ -24,6 +29,35 @@ enum BlockID : GLuint
     DIRT,
     GRASS,
     STONE,
+    NUMBLOCKS,
+};
+
+enum AxisID : unsigned short
+{
+    X,
+    Y,
+    Z
+};
+
+// This is derived from texture atlas class return
+// currently: return {BL, BR, TL, TR};
+// This will need to be modified cause this is so so so dangerous if order gets mixed up BAD,,, but 4 now works
+enum FaceCorners : unsigned short
+{
+    BOTTOM_LEFT,
+    BOTTOM_RIGHT,
+    TOP_LEFT,
+    TOP_RIGHT,
+};
+
+enum FaceIDIdx : unsigned short
+{
+    TOP_FACE,
+    BOTTOM_FACE,
+    FRONT_FACE,
+    RIGHT_FACE,
+    BACK_FACE,
+    LEFT_FACE,
 };
 
 class Chunk
@@ -52,11 +86,21 @@ private:
     vector<GLfloat> vertices;
     vector<BlockID> blocks;
 
-    inline size_t index(GLuint x, GLuint y, GLuint z)
-    {
-        return y * (CHUNKSIZE_X * CHUNKSIZE_Z) + x * CHUNKSIZE_Z + z;
-    }
+    TextureAtlas TA;
 
+    // Look up of faces
+    unordered_map<BlockID, array<UVQuad, 6>> uvLookup;
+
+    inline size_t index(GLuint x, GLuint y, GLuint z);
+    inline void pushVertex(float x, float y, float z, float u, float v);
+    inline void pushIndx(GLuint idx0, GLuint idx1, GLuint idx2, GLuint idx3);
+    
+    inline array< UVQuad , 6> getUVCoordsForFaces(BlockID block);
+
+    void initBuffersAndTextures();
+    void storeUVQuadsInLookup();
+    void sendData();
+    bool isExposed();
 };
 
 struct ChunkCoordHash

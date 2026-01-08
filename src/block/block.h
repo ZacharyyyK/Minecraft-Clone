@@ -14,7 +14,7 @@ public:
     void draw();
 protected:
 
-    void setFaceUVs(int faceIndex, const std::vector<std::pair<float, float>>& uvs);
+    void setFaceUVs(int faceIndex, const std::array<std::pair<float, float>, 4>& uvs);
     void SendVertexData();
     
 

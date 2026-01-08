@@ -39,6 +39,8 @@ float y0 = (float) (HEIGHT / 2);
 bool firstMouse = true;
 bool lockedMouse = true;
 
+bool renderWireframe = false;
+
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 
@@ -58,12 +60,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     y0 = ypos;
 }
 
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, 1);
-
-    if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS) // edge-trigger: only once per press
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (key == GLFW_KEY_TAB && action == GLFW_PRESS) 
     {
         lockedMouse = !lockedMouse;
 
@@ -79,6 +77,37 @@ void processInput(GLFWwindow* window)
             glfwSetCursorPosCallback(window, nullptr);
         }
     }
+
+    if (key == GLFW_KEY_P and action == GLFW_PRESS)
+    {
+        renderWireframe = !renderWireframe;
+
+        if (renderWireframe) glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        else glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+    }
+}
+
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, 1);
+
+    // if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
+    // {
+    //     lockedMouse = !lockedMouse;
+
+    //     if (lockedMouse)
+    //     {
+    //         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //         glfwSetCursorPosCallback(window, mouse_callback);
+    //         firstMouse = true;
+    //     }
+    //     else
+    //     {
+    //         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    //         glfwSetCursorPosCallback(window, nullptr);
+    //     }
+    // }
 
     // Only move camera when locked, if you want "pause"
     t1 = (float)glfwGetTime();
@@ -105,6 +134,7 @@ int main()
 
     Window window("Minecraft", WIDTH, HEIGHT);
     glfwSetCursorPosCallback(window.getWindow(), mouse_callback);
+    glfwSetKeyCallback(window.getWindow(), key_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
         return 1;
@@ -112,25 +142,30 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     Program p("src/shaders/vertexShader.vert", "src/shaders/fragmentShader.frag");
-    // TextureAtlas("src/textures/TextureAtlas.png", 4, 4);
-
-    // Triangle tri(Vertex(-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f), Vertex(0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f), Vertex(0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f));
-
+    
     glm::mat4 perspectiveMat = camera.getPerspective();
     p.SetMat4Uniform("perspective", perspectiveMat);
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     TextureAtlas TA(2, 2);
-    // std::vector<std::pair<float, float>> sideGrassCoords = TA.getCoordsForBlock(0,0);
-    // auto sideGrassCoords = TA.getCoordsForBlock("Side Grass");
-    // auto botGrassCords = TA.getCoordsForBlock(0, 1);
-    // auto topGrassCords = TA.getCoordsForBlock(1,0);
+    
+    
+    Chunk chunk;
+    // array<pair<float, float>, 4> sideGrassCoords = TA.getCoordsForBlock(0,0);
+    auto sideGrassCoords = TA.getCoordsForBlock("Side Grass");
+    auto botGrassCords = TA.getCoordsForBlock(0, 1);
+    auto topGrassCords = TA.getCoordsForBlock(1,0);
 
     // GrassBlock cube(sideGrassCoords, botGrassCords, topGrassCords);
 
-    Chunk chunk;
+    for (int i = 0; i < 4; ++i)
+    {
+        std::cout << botGrassCords[i].first << " " << botGrassCords[i].second << std::endl;
+    }
+    // exit(1);
 
+    // Chunk chunk;
     while(!window.shouldClose())
     {
         processInput(window.getWindow());

@@ -2,160 +2,59 @@
 
 Chunk::Chunk(){
 
-    blocks.assign(CHUNKVOLUME, AIR);
-    vertices.reserve(CHUNKVOLUME + 1);
-    indicies.reserve((CHUNKVOLUME+1) * 6);
+    initBuffersAndTextures();
 
-    GLuint strt_idx = 0;
+    // This is hard coded chopped cheese.. I need a better place to define this somehow
+    TA.setDims(WIDTH_OF_ATLAS, HEIGHT_OF_ATLAS);
+
+    blocks.assign(CHUNKVOLUME, AIR);
+    vertices.reserve(CHUNKVOLUME * 24);
+    indicies.reserve(CHUNKVOLUME * 36);
 
     for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
     {
         for (GLuint x = 0; x < CHUNKSIZE_X; ++x)
         {
+            
             for (GLuint z = 0; z < CHUNKSIZE_Z; ++z)
             {
                 size_t idx = index(x, y, z);
 
                 if (y >= 0 && y < 16)
-                {
                     blocks.at(idx) = GRASS;
 
-                    float _x = (float) x;
-                    float _y = (float) y;
-                    float _z = (float) z;
-
-                    // XY - Plane Face (Only change x and y)
-                    vector<GLfloat> subVerts(20);
-                    vector<GLuint> subIndexs(6);
-
-                    subVerts = {
-                        _x          , _y        ,   _z, 0.0f, 0.0f,
-                        _x + 0.5f   , _y        ,   _z, 1.0f, 0.0f,
-                        _x + 0.5f   , _y + 0.5f ,   _z, 1.0f, 1.0f,
-                        _x          , _y + 0.5f ,   _z, 0.0f, 1.0f,
-                    };
-
-                    subIndexs = {
-                        strt_idx, strt_idx+1, strt_idx+2,
-                        strt_idx+2, strt_idx+3, strt_idx,
-                    };
-
-                    strt_idx += 4;
-                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
-                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
-
-                    // XY - Opposite Plane Face
-                    subVerts = {
-                        _x          , _y        ,   _z + 0.5f, 0.0f, 0.0f,
-                        _x + 0.5f   , _y        ,   _z + 0.5f, 1.0f , 0.0f,
-                        _x + 0.5f   , _y + 0.5f ,   _z + 0.5f, 1.0f, 1.0f,
-                        _x          , _y + 0.5f ,   _z + 0.5f, 0.0f, 1.0f,
-                    };
-
-                    subIndexs = {
-                        strt_idx, strt_idx+1, strt_idx+2,
-                        strt_idx+2, strt_idx+3, strt_idx,
-                    };
-
-                    strt_idx += 4;
-                    
-                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
-                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
-
-                    // XZ - Plane Face (Only change x and z)
-            
-                    subVerts = {
-                        _x          , _y        ,   _z         , 0.0f, 0.0f,
-                        _x + 0.5f   , _y        ,   _z         , 1.0f, 0.0f,
-                        _x + 0.5f   , _y        ,   _z  + 0.5f , 1.0f, 1.0f,
-                        _x          , _y        ,   _z  + 0.5f , 0.0f, 1.0f,
-                    };
-
-                    subIndexs = {
-                        strt_idx, strt_idx+1, strt_idx+2,
-                        strt_idx+2, strt_idx+3, strt_idx,
-                    };
-
-                    strt_idx += 4;
-                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
-                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
-
-                    // XZ - Opposite Plane Face (Only change x and z)
-            
-                    subVerts = {
-                        _x          , _y + 0.5f       ,   _z         , 0.0f, 0.0f,
-                        _x + 0.5f   , _y + 0.5f       ,   _z         , 1.0f, 0.0f,
-                        _x + 0.5f   , _y + 0.5f       ,   _z  + 0.5f , 1.0f, 1.0f,
-                        _x          , _y + 0.5f       ,   _z  + 0.5f , 0.0f, 1.0f,
-                    };
-
-                    subIndexs = {
-                        strt_idx, strt_idx+1, strt_idx+2,
-                        strt_idx+2, strt_idx+3, strt_idx,
-                    };
-
-                    strt_idx += 4;
-                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
-                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
-
-                    // YZ Plane Face (Only change y and z)
-            
-                    subVerts = {
-                        _x          , _y              ,   _z         , 0.0f, 0.0f,
-                        _x          , _y + 0.5f       ,   _z         , 1.0f, 0.0f,
-                        _x          , _y + 0.5f       ,   _z + 0.5f  , 1.0f, 1.0f,
-                        _x          , _y              ,   _z + 0.5f  , 0.0f, 1.0f,
-                    };
-
-                    subIndexs = {
-                        strt_idx, strt_idx+1, strt_idx+2,
-                        strt_idx+2, strt_idx+3, strt_idx,
-                    };
-
-                    strt_idx += 4;
-                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
-                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
-
-                    // YZ - Opposite Plane Face (Only change y and z)
-            
-                    subVerts = {
-                        _x + 0.5f         , _y              ,   _z         , 0.0f, 0.0f,
-                        _x + 0.5f         , _y + 0.5f       ,   _z         , 1.0f, 0.0f,
-                        _x + 0.5f         , _y + 0.5f       ,   _z + 0.5f  , 1.0f, 1.0f,
-                        _x + 0.5f         , _y              ,   _z + 0.5f  , 0.0f, 1.0f,
-                    };
-
-                    subIndexs = {
-                        strt_idx, strt_idx+1, strt_idx+2,
-                        strt_idx+2, strt_idx+3, strt_idx,
-                    };
-
-                    strt_idx += 4;
-                    vertices.insert(vertices.end(), subVerts.begin(), subVerts.end());
-                    indicies.insert(indicies.end(), subIndexs.begin(), subIndexs.end());
-
-                }
-                else blocks.at(idx) = AIR;
-            
-                break;
+                else blocks.at(idx) = AIR;       
+                
+                // break;
             }
-        
-            break;
+                  
+            // break;
         }
-        break;
+        // break;
     }
 
+    storeUVQuadsInLookup();
+    sendData();
+}
+
+void Chunk::initBuffersAndTextures()
+{
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &IBO);
+    
+    glGenTextures(1, &TEXTURE);
 
     glBindVertexArray(VAO);
+    glBindTexture(GL_TEXTURE_2D, TEXTURE);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
@@ -168,13 +67,9 @@ Chunk::Chunk(){
     }
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
 
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_DYNAMIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*) 0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
-
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size() * sizeof(GLuint), indicies.data(), GL_DYNAMIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -182,6 +77,151 @@ Chunk::Chunk(){
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    stbi_image_free(data);
+}
+
+void Chunk::sendData(){
+
+    vertices.clear();
+    indicies.clear();
+
+    GLuint strt_idx = 0;
+
+    float _x, _y, _z;
+    _x = 0; _y = 0; _z = 0;
+
+    for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
+    {
+        _x = 0;
+        for (GLuint x = 0; x < CHUNKSIZE_X; ++x)
+        {
+            _z = 0;
+            for (GLuint z = 0; z < CHUNKSIZE_Z; ++z)
+            {
+                size_t idx = index(x, y,  z);
+
+                if (blocks.at(idx) == AIR) 
+                    continue;
+ 
+                const array< UVQuad , 6>& uvCoords = getUVCoordsForFaces(blocks.at(idx));
+
+                // XY - Plane Face (BACK FACE)
+                const UVQuad& _backFace = uvCoords[BACK_FACE];
+                pushVertex(_x,         _y,         _z,         _backFace[BOTTOM_LEFT].first,  _backFace[BOTTOM_LEFT].second);
+                pushVertex(_x + 0.25f, _y,         _z,         _backFace[BOTTOM_RIGHT].first, _backFace[BOTTOM_RIGHT].second);
+                pushVertex(_x + 0.25f, _y + 0.25f, _z,         _backFace[TOP_RIGHT].first,    _backFace[TOP_RIGHT].second);
+                pushVertex(_x,         _y + 0.25f, _z,         _backFace[TOP_LEFT].first,     _backFace[TOP_LEFT].second);
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+
+                // XY - Opposite Plane Face (FRONT FACE)
+                const UVQuad& _frontFace = uvCoords[FRONT_FACE];
+                pushVertex(_x,         _y,         _z+0.25f,  _frontFace[BOTTOM_LEFT].first,  _frontFace[BOTTOM_LEFT].second);
+                pushVertex(_x + 0.25f, _y,         _z+0.25f,  _frontFace[BOTTOM_RIGHT].first, _frontFace[BOTTOM_RIGHT].second);
+                pushVertex(_x + 0.25f, _y + 0.25f, _z+0.25f,  _frontFace[TOP_RIGHT].first,    _frontFace[TOP_RIGHT].second);
+                pushVertex(_x,         _y + 0.25f, _z+0.25f,  _frontFace[TOP_LEFT].first,     _frontFace[TOP_LEFT].second);
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+
+                // XZ - Plane Face (BOTTOM FACE)
+                const UVQuad& _bottomFace = uvCoords[BOTTOM_FACE];
+                pushVertex(_x,         _y, _z,         _bottomFace[BOTTOM_LEFT].first,  _bottomFace[BOTTOM_LEFT].second);
+                pushVertex(_x + 0.25f, _y, _z,         _bottomFace[BOTTOM_RIGHT].first, _bottomFace[BOTTOM_RIGHT].second);
+                pushVertex(_x + 0.25f, _y, _z + 0.25f, _bottomFace[TOP_RIGHT].first,    _bottomFace[TOP_RIGHT].second);
+                pushVertex(_x,         _y, _z + 0.25f, _bottomFace[TOP_LEFT].first,     _bottomFace[TOP_LEFT].second);
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+
+                // XZ - Opposite Plane Face (TOP FACE)
+                const UVQuad& _topFace = uvCoords[TOP_FACE];
+                pushVertex(_x,         _y+0.25f, _z,         _topFace[BOTTOM_LEFT].first,  _topFace[BOTTOM_LEFT].second);
+                pushVertex(_x + 0.25f, _y+0.25f, _z,         _topFace[BOTTOM_RIGHT].first, _topFace[BOTTOM_RIGHT].second);
+                pushVertex(_x + 0.25f, _y+0.25f, _z + 0.25f, _topFace[TOP_RIGHT].first,    _topFace[TOP_RIGHT].second);
+                pushVertex(_x,         _y+0.25f, _z + 0.25f, _topFace[TOP_LEFT].first,     _topFace[TOP_LEFT].second);
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+
+                // YZ - Plane Face (LEFT FACE)
+                const UVQuad& _leftFace = uvCoords[LEFT_FACE];
+                pushVertex(_x, _y,         _z,         _leftFace[BOTTOM_LEFT].first,  _leftFace[BOTTOM_LEFT].second);
+                pushVertex(_x, _y+0.25f,   _z,         _leftFace[TOP_LEFT].first, _leftFace[TOP_LEFT].second); 
+                pushVertex(_x, _y+0.25f, _z+0.25f,     _leftFace[TOP_RIGHT].first,    _leftFace[TOP_RIGHT].second);
+                pushVertex(_x, _y,       _z+0.25f,     _leftFace[BOTTOM_RIGHT].first,     _leftFace[BOTTOM_RIGHT].second); 
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+
+                // YZ - Opposite Plane Face (RIGHT FACE)
+                const UVQuad& _rightFace = uvCoords[RIGHT_FACE];
+                pushVertex(_x+0.25f, _y,         _z,         _rightFace[BOTTOM_LEFT].first,  _rightFace[BOTTOM_LEFT].second);
+                pushVertex(_x+0.25f, _y+0.25f,   _z,         _rightFace[TOP_LEFT].first, _rightFace[TOP_LEFT].second);
+                pushVertex(_x+0.25f, _y+0.25f, _z+0.25f,     _rightFace[TOP_RIGHT].first,    _rightFace[TOP_RIGHT].second);
+                pushVertex(_x+0.25f, _y,       _z+0.25f,     _rightFace[BOTTOM_RIGHT].first,     _rightFace[BOTTOM_RIGHT].second);
+                pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+
+            
+                _z += 0.25f;
+                // break;
+            }
+            
+            _x += 0.25f;
+            // break;
+        }
+        _y += 0.25f;
+        // break;
+    }
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size() * sizeof(GLuint), indicies.data(), GL_DYNAMIC_DRAW);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void Chunk::storeUVQuadsInLookup()
+{
+    unordered_map<BlockID, array<UVQuad, 6>>& _uvLookup = uvLookup;
+
+    // Grass Creation
+    UVQuad grassTop = TA.getCoordsForBlock("Top Grass");
+    UVQuad dirtFace = TA.getCoordsForBlock("Dirt");
+    UVQuad grassSide = TA.getCoordsForBlock("Side Grass");
+  
+    uvLookup[GRASS] = array<UVQuad, 6>();
+    array<UVQuad, 6>& grassEntry = uvLookup[GRASS];
+
+    grassEntry[TOP_FACE] = grassTop;
+    grassEntry[BOTTOM_FACE] = dirtFace;
+    grassEntry[FRONT_FACE] = grassSide;
+    grassEntry[RIGHT_FACE] = grassSide;
+    grassEntry[BACK_FACE] = grassSide;
+    grassEntry[LEFT_FACE] = grassSide;
+
+    // Dirt Creation
+    uvLookup[DIRT] = array<UVQuad, 6>();
+    array<UVQuad, 6>& dirtEntry = uvLookup[DIRT];
+
+    dirtEntry[TOP_FACE] = dirtFace;
+    dirtEntry[BOTTOM_FACE] = dirtFace;
+    dirtEntry[FRONT_FACE] = dirtFace;
+    dirtEntry[RIGHT_FACE] = dirtFace;
+    dirtEntry[BACK_FACE] = dirtFace;
+    dirtEntry[LEFT_FACE] = dirtFace;
+
+}
+
+inline array< UVQuad, 6> Chunk::getUVCoordsForFaces(BlockID block)
+{
+    auto it = uvLookup.find(block);
+    
+    if (it == uvLookup.end())
+    {
+        printf("Failed to lookup block: %u... terminating", block);
+        exit(1);
+    }
+
+    return it->second;
+
 }
 
 void Chunk::draw()
@@ -197,3 +237,24 @@ void Chunk::draw()
 
 glm::ivec3& Chunk::getChunkCoords() { return cc; }
 glm::ivec3 Chunk::getChunkCoords() const { return cc; }
+
+inline size_t Chunk::index(GLuint x, GLuint y, GLuint z) { return y * (CHUNKSIZE_X * CHUNKSIZE_Z) + x * CHUNKSIZE_Z + z; }
+
+inline void Chunk::pushVertex(float x, float y, float z, float u, float v)
+{
+    vertices.push_back(x);
+    vertices.push_back(y);
+    vertices.push_back(z);
+    vertices.push_back(u);
+    vertices.push_back(v);
+}
+
+inline void Chunk::pushIndx(GLuint idx0, GLuint idx1, GLuint idx2, GLuint idx3)
+{
+    indicies.push_back(idx0);
+    indicies.push_back(idx1);
+    indicies.push_back(idx2);
+    indicies.push_back(idx2);
+    indicies.push_back(idx3);
+    indicies.push_back(idx0);
+}
