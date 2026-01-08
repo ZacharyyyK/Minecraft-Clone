@@ -88,6 +88,7 @@ private:
 
     TextureAtlas TA;
 
+    GLuint facesThatCanBeSeen;
     GLuint blocksThatCanBeSeen;
 
     // Look up of faces
@@ -103,6 +104,7 @@ private:
     void storeUVQuadsInLookup();
     void sendData();
     bool isExposed(GLuint x, GLuint y, GLuint z);
+    bool isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face);
 };
 
 struct ChunkCoordHash

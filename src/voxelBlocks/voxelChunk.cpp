@@ -112,6 +112,39 @@ bool Chunk::isExposed(GLuint x, GLuint y, GLuint z)
     return false;
 }
 
+bool Chunk::isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face)
+{
+    switch (face)
+    {
+        case TOP_FACE:
+            return (y == CHUNKSIZE_Y - 1) ||
+                   blocks[index(x, y + 1, z)] == AIR;
+
+        case BOTTOM_FACE:
+            return (y == 0) ||
+                   blocks[index(x, y - 1, z)] == AIR;
+
+        case FRONT_FACE:
+            return (z == CHUNKSIZE_Z - 1) ||
+                   blocks[index(x, y, z + 1)] == AIR;
+
+        case BACK_FACE:
+            return (z == 0) ||
+                   blocks[index(x, y, z - 1)] == AIR;
+
+        case RIGHT_FACE:
+            return (x == CHUNKSIZE_X - 1) ||
+                   blocks[index(x + 1, y, z)] == AIR;
+
+        case LEFT_FACE:
+            return (x == 0) ||
+                   blocks[index(x - 1, y, z)] == AIR;
+    }
+
+    return false;
+}
+
+
 void Chunk::sendData(){
 
     vertices.clear();
@@ -122,7 +155,9 @@ void Chunk::sendData(){
     float _x, _y, _z;
     _x = 0; _y = 0; _z = 0;
 
-    blocksThatCanBeSeen = 0;
+    facesThatCanBeSeen = 0;
+
+    blocks[index(0, 1, CHUNKSIZE_Z-1)] = AIR;
 
     for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
     {
@@ -138,60 +173,88 @@ void Chunk::sendData(){
                 if (blocks.at(idx) == AIR) 
                     continue;
 
-                if (!isExposed(x, y, z)) continue;
+                // if (!isExposed(x, y, z)) continue;
  
-                ++blocksThatCanBeSeen;
 
+                // Need to switch to faces, this will have to be facesThatCanBeSeen and then in index buffer do facesThatCanBeSeen * 6
+                // ++blocksThatCanBeSeen;
+                
                 const array< UVQuad , 6>& uvCoords = getUVCoordsForFaces(blocks.at(idx));
 
                 // XY - Plane Face (BACK FACE)
-                const UVQuad& _backFace = uvCoords[BACK_FACE];
-                pushVertex(_x,         _y,         _z,         _backFace[BOTTOM_LEFT].first,  _backFace[BOTTOM_LEFT].second);
-                pushVertex(_x + 0.25f, _y,         _z,         _backFace[BOTTOM_RIGHT].first, _backFace[BOTTOM_RIGHT].second);
-                pushVertex(_x + 0.25f, _y + 0.25f, _z,         _backFace[TOP_RIGHT].first,    _backFace[TOP_RIGHT].second);
-                pushVertex(_x,         _y + 0.25f, _z,         _backFace[TOP_LEFT].first,     _backFace[TOP_LEFT].second);
+                if (isFaceExposed(x, y, z, BACK_FACE)) {
+                    ++facesThatCanBeSeen;
+
+                    const UVQuad& _backFace = uvCoords[BACK_FACE];
+                    pushVertex(_x,         _y,         _z,         _backFace[BOTTOM_LEFT].first,  _backFace[BOTTOM_LEFT].second);
+                    pushVertex(_x + 0.25f, _y,         _z,         _backFace[BOTTOM_RIGHT].first, _backFace[BOTTOM_RIGHT].second);
+                    pushVertex(_x + 0.25f, _y + 0.25f, _z,         _backFace[TOP_RIGHT].first,    _backFace[TOP_RIGHT].second);
+                    pushVertex(_x,         _y + 0.25f, _z,         _backFace[TOP_LEFT].first,     _backFace[TOP_LEFT].second);
                 // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                }
 
                 // XY - Opposite Plane Face (FRONT FACE)
-                const UVQuad& _frontFace = uvCoords[FRONT_FACE];
-                pushVertex(_x,         _y,         _z+0.25f,  _frontFace[BOTTOM_LEFT].first,  _frontFace[BOTTOM_LEFT].second);
-                pushVertex(_x + 0.25f, _y,         _z+0.25f,  _frontFace[BOTTOM_RIGHT].first, _frontFace[BOTTOM_RIGHT].second);
-                pushVertex(_x + 0.25f, _y + 0.25f, _z+0.25f,  _frontFace[TOP_RIGHT].first,    _frontFace[TOP_RIGHT].second);
-                pushVertex(_x,         _y + 0.25f, _z+0.25f,  _frontFace[TOP_LEFT].first,     _frontFace[TOP_LEFT].second);
-                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                if (isFaceExposed(x, y, z, FRONT_FACE)) {
+                    ++facesThatCanBeSeen;
+
+                    const UVQuad& _frontFace = uvCoords[FRONT_FACE];
+                    pushVertex(_x,         _y,         _z+0.25f,  _frontFace[BOTTOM_LEFT].first,  _frontFace[BOTTOM_LEFT].second);
+                    pushVertex(_x + 0.25f, _y,         _z+0.25f,  _frontFace[BOTTOM_RIGHT].first, _frontFace[BOTTOM_RIGHT].second);
+                    pushVertex(_x + 0.25f, _y + 0.25f, _z+0.25f,  _frontFace[TOP_RIGHT].first,    _frontFace[TOP_RIGHT].second);
+                    pushVertex(_x,         _y + 0.25f, _z+0.25f,  _frontFace[TOP_LEFT].first,     _frontFace[TOP_LEFT].second);
+                    // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                }
 
                 // XZ - Plane Face (BOTTOM FACE)
-                const UVQuad& _bottomFace = uvCoords[BOTTOM_FACE];
-                pushVertex(_x,         _y, _z,         _bottomFace[BOTTOM_LEFT].first,  _bottomFace[BOTTOM_LEFT].second);
-                pushVertex(_x + 0.25f, _y, _z,         _bottomFace[BOTTOM_RIGHT].first, _bottomFace[BOTTOM_RIGHT].second);
-                pushVertex(_x + 0.25f, _y, _z + 0.25f, _bottomFace[TOP_RIGHT].first,    _bottomFace[TOP_RIGHT].second);
-                pushVertex(_x,         _y, _z + 0.25f, _bottomFace[TOP_LEFT].first,     _bottomFace[TOP_LEFT].second);
-                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                if (isFaceExposed(x, y, z, BOTTOM_FACE)) {
+                    ++facesThatCanBeSeen;
+
+                    const UVQuad& _bottomFace = uvCoords[BOTTOM_FACE];
+                    pushVertex(_x,         _y, _z,         _bottomFace[BOTTOM_LEFT].first,  _bottomFace[BOTTOM_LEFT].second);
+                    pushVertex(_x + 0.25f, _y, _z,         _bottomFace[BOTTOM_RIGHT].first, _bottomFace[BOTTOM_RIGHT].second);
+                    pushVertex(_x + 0.25f, _y, _z + 0.25f, _bottomFace[TOP_RIGHT].first,    _bottomFace[TOP_RIGHT].second);
+                    pushVertex(_x,         _y, _z + 0.25f, _bottomFace[TOP_LEFT].first,     _bottomFace[TOP_LEFT].second);
+                    // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                }
 
                 // XZ - Opposite Plane Face (TOP FACE)
-                const UVQuad& _topFace = uvCoords[TOP_FACE];
-                pushVertex(_x,         _y+0.25f, _z,         _topFace[BOTTOM_LEFT].first,  _topFace[BOTTOM_LEFT].second);
-                pushVertex(_x + 0.25f, _y+0.25f, _z,         _topFace[BOTTOM_RIGHT].first, _topFace[BOTTOM_RIGHT].second);
-                pushVertex(_x + 0.25f, _y+0.25f, _z + 0.25f, _topFace[TOP_RIGHT].first,    _topFace[TOP_RIGHT].second);
-                pushVertex(_x,         _y+0.25f, _z + 0.25f, _topFace[TOP_LEFT].first,     _topFace[TOP_LEFT].second);
-                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                if (isFaceExposed(x, y, z, TOP_FACE)) {
+                    ++facesThatCanBeSeen;
+
+                    const UVQuad& _topFace = uvCoords[TOP_FACE];
+                    pushVertex(_x,         _y+0.25f, _z,         _topFace[BOTTOM_LEFT].first,  _topFace[BOTTOM_LEFT].second);
+                    pushVertex(_x + 0.25f, _y+0.25f, _z,         _topFace[BOTTOM_RIGHT].first, _topFace[BOTTOM_RIGHT].second);
+                    pushVertex(_x + 0.25f, _y+0.25f, _z + 0.25f, _topFace[TOP_RIGHT].first,    _topFace[TOP_RIGHT].second);
+                    pushVertex(_x,         _y+0.25f, _z + 0.25f, _topFace[TOP_LEFT].first,     _topFace[TOP_LEFT].second);
+                    // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                }
 
                 // YZ - Plane Face (LEFT FACE)
-                const UVQuad& _leftFace = uvCoords[LEFT_FACE];
-                pushVertex(_x, _y,         _z,         _leftFace[BOTTOM_LEFT].first,  _leftFace[BOTTOM_LEFT].second);
-                pushVertex(_x, _y+0.25f,   _z,         _leftFace[TOP_LEFT].first, _leftFace[TOP_LEFT].second); 
-                pushVertex(_x, _y+0.25f, _z+0.25f,     _leftFace[TOP_RIGHT].first,    _leftFace[TOP_RIGHT].second);
-                pushVertex(_x, _y,       _z+0.25f,     _leftFace[BOTTOM_RIGHT].first,     _leftFace[BOTTOM_RIGHT].second); 
-                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                if (isFaceExposed(x, y, z, LEFT_FACE))
+                {
+                    ++facesThatCanBeSeen;
+
+                    const UVQuad& _leftFace = uvCoords[LEFT_FACE];
+                    pushVertex(_x, _y,         _z,         _leftFace[BOTTOM_LEFT].first,  _leftFace[BOTTOM_LEFT].second);
+                    pushVertex(_x, _y+0.25f,   _z,         _leftFace[TOP_LEFT].first, _leftFace[TOP_LEFT].second); 
+                    pushVertex(_x, _y+0.25f, _z+0.25f,     _leftFace[TOP_RIGHT].first,    _leftFace[TOP_RIGHT].second);
+                    pushVertex(_x, _y,       _z+0.25f,     _leftFace[BOTTOM_RIGHT].first,     _leftFace[BOTTOM_RIGHT].second); 
+                    // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                }
 
                 // YZ - Opposite Plane Face (RIGHT FACE)
-                const UVQuad& _rightFace = uvCoords[RIGHT_FACE];
-                pushVertex(_x+0.25f, _y,         _z,         _rightFace[BOTTOM_LEFT].first,  _rightFace[BOTTOM_LEFT].second);
-                pushVertex(_x+0.25f, _y+0.25f,   _z,         _rightFace[TOP_LEFT].first, _rightFace[TOP_LEFT].second);
-                pushVertex(_x+0.25f, _y+0.25f, _z+0.25f,     _rightFace[TOP_RIGHT].first,    _rightFace[TOP_RIGHT].second);
-                pushVertex(_x+0.25f, _y,       _z+0.25f,     _rightFace[BOTTOM_RIGHT].first,     _rightFace[BOTTOM_RIGHT].second);
-                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                if (isFaceExposed(x, y, z, RIGHT_FACE)) {
+                    ++facesThatCanBeSeen;
+
+                    const UVQuad& _rightFace = uvCoords[RIGHT_FACE];
+                    pushVertex(_x+0.25f, _y,         _z,         _rightFace[BOTTOM_LEFT].first,  _rightFace[BOTTOM_LEFT].second);
+                    pushVertex(_x+0.25f, _y+0.25f,   _z,         _rightFace[TOP_LEFT].first, _rightFace[TOP_LEFT].second);
+                    pushVertex(_x+0.25f, _y+0.25f, _z+0.25f,     _rightFace[TOP_RIGHT].first,    _rightFace[TOP_RIGHT].second);
+                    pushVertex(_x+0.25f, _y,       _z+0.25f,     _rightFace[BOTTOM_RIGHT].first,     _rightFace[BOTTOM_RIGHT].second);
+                    // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                }
                 // break;
+
             }
         
             // break;
@@ -263,7 +326,7 @@ void Chunk::draw()
     glBindTexture(GL_TEXTURE_2D, TEXTURE);
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, blocksThatCanBeSeen * 36, GL_UNSIGNED_INT, (void*) 0);
+    glDrawElements(GL_TRIANGLES, facesThatCanBeSeen * 6, GL_UNSIGNED_INT, (void*) 0);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
