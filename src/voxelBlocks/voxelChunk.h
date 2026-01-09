@@ -64,12 +64,13 @@ class Chunk
 {
 public:
 
-    Chunk();
+    Chunk(int cx=0, int cy=0, int cz=0);
 
     bool operator==(const Chunk& other) const {
         return this->cc == other.cc;
     }
-
+    
+    void setChunkCoords(int cx, int cy, int cz);
     glm::ivec3& getChunkCoords();
     glm::ivec3 getChunkCoords() const;
 
@@ -109,10 +110,10 @@ private:
 
 struct ChunkCoordHash
 {
-    size_t operator()(const Chunk& c) const{
-        size_t hx = std::hash<int>{}(c.getChunkCoords().x);
-        size_t hy = std::hash<int>{}(c.getChunkCoords().y);
-        size_t hz = std::hash<int>{}(c.getChunkCoords().z);
+    size_t operator()(const glm::ivec3& c) const{
+        size_t hx = std::hash<int>{}(c.x);
+        size_t hy = std::hash<int>{}(c.y);
+        size_t hz = std::hash<int>{}(c.z);
 
         size_t seed = hx;
         seed ^= hy + 0x9e3779b9 + (seed << 6) + (seed >> 2);
@@ -121,18 +122,24 @@ struct ChunkCoordHash
     }
 };
 
-// class ChunkManager{
-// public:
-//     ChunkManager();
+class ChunkManager{
+public:
+    ChunkManager(GLuint program);
 
-//     Chunk* getChunk(glm::ivec3 chunkCoord)
-//     {
-//         auto it = chunks.find(chunkCoord);
-//         if (it == chunks.end()) return nullptr;
+    Chunk* getChunk(glm::ivec3 chunkCoord)
+    {
+        auto it = chunks.find(chunkCoord);
+        if (it == chunks.end()) return nullptr;
 
-//         return &(it->second);
-//     }
+        return &(it->second);
+    }
 
-// private:
-//     std::unordered_map<glm::ivec3, Chunk, ChunkCoordHash> chunks;
-// };
+    void draw();
+
+private:
+    std::unordered_map<glm::ivec3, Chunk, ChunkCoordHash> chunks;
+
+    GLuint program;
+    GLuint CHUNK_DIM;
+    GLuint ccLoc;
+};

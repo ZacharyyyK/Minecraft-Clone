@@ -151,7 +151,7 @@ int main()
     TextureAtlas TA(2, 2);
     
     
-    Chunk chunk;
+    // Chunk chunk;
     // array<pair<float, float>, 4> sideGrassCoords = TA.getCoordsForBlock(0,0);
     auto sideGrassCoords = TA.getCoordsForBlock("Side Grass");
     auto botGrassCords = TA.getCoordsForBlock(0, 1);
@@ -166,6 +166,9 @@ int main()
     // exit(1);
 
     // Chunk chunk;
+
+    ChunkManager cm(p.getID());
+
     while(!window.shouldClose())
     {
         processInput(window.getWindow());
@@ -177,7 +180,8 @@ int main()
 
         // tri.draw();
         // cube.draw();
-        chunk.draw();
+        // chunk.draw();
+        cm.draw();
 
         window.swapBuffers();
         window.pollEvents();

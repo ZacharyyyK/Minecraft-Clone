@@ -1,6 +1,8 @@
 # include "voxelChunk.h"
 
-Chunk::Chunk(){
+Chunk::Chunk(int cx, int cy, int cz){
+
+    cc = {cx,  cy, cz};
 
     initBuffersAndTextures();
 
@@ -148,7 +150,6 @@ bool Chunk::isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face)
 void Chunk::sendData(){
 
     vertices.clear();
-    // indicies.clear();
 
     GLuint strt_idx = 0;
 
@@ -157,7 +158,9 @@ void Chunk::sendData(){
 
     facesThatCanBeSeen = 0;
 
-    blocks[index(0, 1, CHUNKSIZE_Z-1)] = AIR;
+    // blocks[index(0, 1, CHUNKSIZE_Z-1)] = AIR;
+    // blocks[index(0, 3, CHUNKSIZE_Z-1)] = AIR;
+    // blocks[index(0, 4, CHUNKSIZE_Z-1)] = AIR;
 
     for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
     {
@@ -172,13 +175,7 @@ void Chunk::sendData(){
 
                 if (blocks.at(idx) == AIR) 
                     continue;
-
-                // if (!isExposed(x, y, z)) continue;
- 
-
-                // Need to switch to faces, this will have to be facesThatCanBeSeen and then in index buffer do facesThatCanBeSeen * 6
-                // ++blocksThatCanBeSeen;
-                
+    
                 const array< UVQuad , 6>& uvCoords = getUVCoordsForFaces(blocks.at(idx));
 
                 // XY - Plane Face (BACK FACE)
@@ -324,13 +321,14 @@ void Chunk::draw()
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TEXTURE);
-
     glBindVertexArray(VAO);
+
     glDrawElements(GL_TRIANGLES, facesThatCanBeSeen * 6, GL_UNSIGNED_INT, (void*) 0);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void Chunk::setChunkCoords(int cx, int cy, int cz) { cc = {cx, cy, cz}; }
 glm::ivec3& Chunk::getChunkCoords() { return cc; }
 glm::ivec3 Chunk::getChunkCoords() const { return cc; }
 
@@ -353,4 +351,43 @@ inline void Chunk::pushIndx(GLuint idx0, GLuint idx1, GLuint idx2, GLuint idx3)
     indicies.push_back(idx2);
     indicies.push_back(idx3);
     indicies.push_back(idx0);
+}
+
+ChunkManager::ChunkManager(GLuint program) : program(program)
+{
+    CHUNK_DIM = 4;
+    // for (int x = 0; x < CHUNK_DIM; ++x)
+    // {
+    //     for (int z = 0; z < CHUNK_DIM; ++z)
+    //     {
+    //         glm::vec3 cc = {x, 0, z};
+    //         chunks[cc] = Chunk(x, 0, z);
+    //     }
+    
+    // }
+
+    glm::vec3 cc = {0, 0, 0};
+    chunks[cc] = Chunk(cc.x, cc.y, cc.z);
+
+    cc = {1, 0, 0};
+    chunks[cc] = Chunk(cc.x, cc.y, cc.z);
+
+    ccLoc = glGetUniformLocation(program, "cc");
+
+    glUniform3fv(ccLoc, 1, &glm::vec3(0.f, 0.f, 0.f)[0]);
+}
+
+void ChunkManager::draw()
+{
+    for (auto it = chunks.begin(); it != chunks.end(); ++it)
+    {
+        Chunk& chunk = it->second;
+
+        glm::ivec3& cc = chunk.getChunkCoords();
+        glm::vec3 worldOffset = glm::vec3(cc.x * CHUNKSIZE_X, cc.y * CHUNKSIZE_Y, cc.z * CHUNKSIZE_Z) * 0.25f;
+
+        glUniform3fv(ccLoc, 1, &worldOffset[0]);
+
+        chunk.draw();
+    }
 }
