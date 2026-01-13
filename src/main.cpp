@@ -30,11 +30,11 @@ int HEIGHT = 800;
 
 Camera camera;
 
-float t0 = (float) glfwGetTime();
-float t1 = (float) glfwGetTime();
+float t0 ;
+float t1 ;
 
 float x0 = (float) (WIDTH / 2);
-float y0 = (float) (HEIGHT / 2);
+float y02 = (float) (HEIGHT / 2);
 
 bool firstMouse = true;
 bool lockedMouse = true;
@@ -47,17 +47,17 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     if (firstMouse)
     {
         x0 = (float) xpos;
-        y0 = (float) ypos;
+        y02 = (float) ypos;
         firstMouse = false;
     }
 
     float dx = ((float) xpos) - x0;
-    float dy = ((float) ypos) - y0;
+    float dy = ((float) ypos) - y02;
 
     camera.ProcessMouseMovement(dx, dy);
 
     x0 = xpos;
-    y0 = ypos;
+    y02 = ypos;
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -123,6 +123,26 @@ int main()
     if (!glfwInit())    
         return 1;
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // Specify major version 3
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // Specify minor version 3
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Use core profile
+
+    // The forward compatibility hint is recommended, especially for macOS
+    #ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #endif
+
+    // glfwInit();
+
+    t0 = (float) glfwGetTime();
+    t1 = (float) glfwGetTime();
+
+    const char* descrip = nullptr;
+    int code = glfwGetError(&descrip);
+    if (descrip) std::cout << descrip << std::endl;
+    
+    if (descrip) return -1;
+
     GLFWmonitor* MyMonitor =  glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(MyMonitor);
 
@@ -133,6 +153,7 @@ int main()
     camera.setHeight(HEIGHT);
 
     Window window("Minecraft", WIDTH, HEIGHT);
+
     glfwSetCursorPosCallback(window.getWindow(), mouse_callback);
     glfwSetKeyCallback(window.getWindow(), key_callback);
 

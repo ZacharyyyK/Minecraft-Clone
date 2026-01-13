@@ -3,14 +3,12 @@
 Window::Window(const char* title, int width, int height) : width(width), height(height)
 {
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
     window = glfwCreateWindow(width, height, title, NULL, NULL);
 
     if (!window)
     {
-        println("Failed to create window...");
+        std::cout << "Failed to create window..." << std::endl;
         return;
     }
 

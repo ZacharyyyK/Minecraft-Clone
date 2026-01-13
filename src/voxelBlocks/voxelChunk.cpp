@@ -69,7 +69,7 @@ void Chunk::initBuffersAndTextures()
 
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char *data = stbi_load("C:/Users/zacha/Projects/Minecraft/src/textures/TextureAtlas.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("./src/textures/TextureAtlas.jpg", &width, &height, &nrChannels, 0);
     if (!data)
     {
         std::cout << "Failed to load texture ... in cube debug" << std::endl;

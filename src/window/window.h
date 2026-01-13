@@ -1,8 +1,6 @@
 # pragma once
 # include <GLFW/glfw3.h>
-# include <print>
-
-using std::println;
+# include <iostream>
 
 class Window
 {
