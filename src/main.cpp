@@ -30,11 +30,11 @@ int HEIGHT = 800;
 
 Camera camera;
 
-float t0 = (float) glfwGetTime();
-float t1 = (float) glfwGetTime();
+float t0;
+float t1;
 
 float x0 = (float) (WIDTH / 2);
-float y0 = (float) (HEIGHT / 2);
+float y02 = (float) (HEIGHT / 2);
 
 bool firstMouse = true;
 bool lockedMouse = true;
@@ -47,17 +47,17 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     if (firstMouse)
     {
         x0 = (float) xpos;
-        y0 = (float) ypos;
+        y02 = (float) ypos;
         firstMouse = false;
     }
 
     float dx = ((float) xpos) - x0;
-    float dy = ((float) ypos) - y0;
+    float dy = ((float) ypos) - y02;
 
     camera.ProcessMouseMovement(dx, dy);
 
     x0 = xpos;
-    y0 = ypos;
+    y02 = ypos;
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -123,8 +123,12 @@ int main()
     if (!glfwInit())    
         return 1;
 
-    GLFWmonitor* MyMonitor =  glfwGetPrimaryMonitor();
-    const GLFWvidmode* mode = glfwGetVideoMode(MyMonitor);
+    #ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #endif
+
+    t0 = (float) glfwGetTime();
+    t1 = (float) glfwGetTime();
 
     WIDTH = 1200;
     HEIGHT = 800;
