@@ -167,7 +167,7 @@ int main()
 
     // Chunk chunk;
 
-    ChunkManager cm(p.getID());
+    ChunkManager cm(p.getID(), 8);
 
     while(!window.shouldClose())
     {

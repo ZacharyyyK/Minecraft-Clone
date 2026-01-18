@@ -1,7 +1,8 @@
 # include "voxelChunk.h"
 
-Chunk::Chunk(int cx, int cy, int cz){
+Chunk::Chunk(ChunkManager* chunkmanager, int cx, int cy, int cz){
 
+    cm = chunkmanager;
     cc = {cx,  cy, cz};
 
     initBuffersAndTextures();
@@ -9,7 +10,7 @@ Chunk::Chunk(int cx, int cy, int cz){
     // This is hard coded chopped cheese.. I need a better place to define this somehow
     TA.setDims(WIDTH_OF_ATLAS, HEIGHT_OF_ATLAS);
 
-    blocks.assign(CHUNKVOLUME, AIR);
+    blocks.assign(CHUNKVOLUME, BlockID::AIR);
     vertices.reserve(CHUNKVOLUME * 24);
     indicies.reserve(CHUNKVOLUME * 36);
 
@@ -24,9 +25,9 @@ Chunk::Chunk(int cx, int cy, int cz){
                 size_t idx = index(x, y, z);
 
                 if (y >= 0 && y <= 16){
-                    blocks.at(idx) = GRASS;
+                    blocks.at(idx) = BlockID::GRASS;
                 }
-                else blocks.at(idx) = AIR;       
+                else blocks.at(idx) = BlockID::AIR;       
                 
                 pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
                 pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
@@ -42,9 +43,11 @@ Chunk::Chunk(int cx, int cy, int cz){
         // break;
     }
 
-
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size() * sizeof(GLuint), indicies.data(), GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     storeUVQuadsInLookup();
-    sendData();
+    // sendData();
 }
 
 void Chunk::initBuffersAndTextures()
@@ -108,7 +111,7 @@ bool Chunk::isExposed(GLuint x, GLuint y, GLuint z)
     size_t lftIdx = index(x-1, y, z);
     size_t rgtIdx = index(x+1, y, z);
 
-    if(blocks[topIdx] == AIR || blocks[botIdx] == AIR || blocks[frtIdx] == AIR || blocks[bckIdx] == AIR || blocks[lftIdx] == AIR || blocks[rgtIdx] == AIR)
+    if(blocks[topIdx] == BlockID::AIR || blocks[botIdx] == BlockID::AIR || blocks[frtIdx] == BlockID::AIR || blocks[bckIdx] == BlockID::AIR || blocks[lftIdx] == BlockID::AIR || blocks[rgtIdx] == BlockID::AIR)
         return true;
 
     return false;
@@ -116,31 +119,62 @@ bool Chunk::isExposed(GLuint x, GLuint y, GLuint z)
 
 bool Chunk::isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face)
 {
+
+    auto neighborIsAir = [&] (glm::ivec3 _cc, GLuint bx, GLuint by, GLuint bz) -> bool
+    {
+
+        // cc is the chunk we want to check,
+        // bx, by, bz, are the block to check in this chunk
+
+        auto it = cm->chunks.find(_cc);
+        if (it == cm->chunks.end()) return true; // If there's no chunk on this side then return true since its exposed (teehee)
+
+        Chunk& nc = it->second;
+
+        return nc.blocks[nc.index(bx, by, bz)] == BlockID::AIR;
+    };
+
     switch (face)
     {
         case TOP_FACE:
             return (y == CHUNKSIZE_Y - 1) ||
-                   blocks[index(x, y + 1, z)] == AIR;
+                   blocks[index(x, y + 1, z)] == BlockID::AIR;
 
         case BOTTOM_FACE:
             return (y == 0) ||
-                   blocks[index(x, y - 1, z)] == AIR;
+                   blocks[index(x, y - 1, z)] == BlockID::AIR;
 
         case FRONT_FACE:
-            return (z == CHUNKSIZE_Z - 1) ||
-                   blocks[index(x, y, z + 1)] == AIR;
+        {
+            if (z == CHUNKSIZE_Z - 1) {
+                return neighborIsAir({cc.x, cc.y, cc.z + 1}, x, y, 0);
+            }
 
+            return blocks[index(x, y, z + 1)] == BlockID::AIR;
+        }
         case BACK_FACE:
-            return (z == 0) ||
-                   blocks[index(x, y, z - 1)] == AIR;
-
+        {
+            if (z == 0) {
+                return neighborIsAir({cc.x, cc.y, cc.z - 1}, x, y, CHUNKSIZE_Z - 1);
+            }
+         
+            return blocks[index(x, y, z - 1)] == BlockID::AIR;
+        }
         case RIGHT_FACE:
-            return (x == CHUNKSIZE_X - 1) ||
-                   blocks[index(x + 1, y, z)] == AIR;
-
+        {
+            if (x == CHUNKSIZE_X - 1) {
+                return neighborIsAir({cc.x + 1, cc.y, cc.z}, 0, y, z);
+            }
+         
+            return blocks[index(x + 1, y, z)] == BlockID::AIR;
+        }
         case LEFT_FACE:
-            return (x == 0) ||
-                   blocks[index(x - 1, y, z)] == AIR;
+
+            if (x == 0) {
+                return neighborIsAir({cc.x - 1, cc.y, cc.z}, CHUNKSIZE_X-1, y, z);
+            }        
+
+            return blocks[index(x - 1, y, z)] == BlockID::AIR;
     }
 
     return false;
@@ -150,6 +184,7 @@ bool Chunk::isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face)
 void Chunk::sendData(){
 
     vertices.clear();
+    // indicies.clear();
 
     GLuint strt_idx = 0;
 
@@ -157,10 +192,6 @@ void Chunk::sendData(){
     _x = 0; _y = 0; _z = 0;
 
     facesThatCanBeSeen = 0;
-
-    // blocks[index(0, 1, CHUNKSIZE_Z-1)] = AIR;
-    // blocks[index(0, 3, CHUNKSIZE_Z-1)] = AIR;
-    // blocks[index(0, 4, CHUNKSIZE_Z-1)] = AIR;
 
     for (GLuint y = 0; y < CHUNKSIZE_Y; ++y)
     {
@@ -173,10 +204,10 @@ void Chunk::sendData(){
                 _z = float(z) * 0.25f;
                 size_t idx = index(x, y,  z);
 
-                if (blocks.at(idx) == AIR) 
+                if (blocks.at(idx) == BlockID::AIR) 
                     continue;
     
-                const array< UVQuad , 6>& uvCoords = getUVCoordsForFaces(blocks.at(idx));
+                const array< UVQuad , 6> uvCoords = getUVCoordsForFaces(blocks.at(idx));
 
                 // XY - Plane Face (BACK FACE)
                 if (isFaceExposed(x, y, z, BACK_FACE)) {
@@ -187,7 +218,7 @@ void Chunk::sendData(){
                     pushVertex(_x + 0.25f, _y,         _z,         _backFace[BOTTOM_RIGHT].first, _backFace[BOTTOM_RIGHT].second);
                     pushVertex(_x + 0.25f, _y + 0.25f, _z,         _backFace[TOP_RIGHT].first,    _backFace[TOP_RIGHT].second);
                     pushVertex(_x,         _y + 0.25f, _z,         _backFace[TOP_LEFT].first,     _backFace[TOP_LEFT].second);
-                // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
+                    // pushIndx(strt_idx, strt_idx+1, strt_idx+2, strt_idx+3); strt_idx += 4;
                 }
 
                 // XY - Opposite Plane Face (FRONT FACE)
@@ -264,7 +295,7 @@ void Chunk::sendData(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_DYNAMIC_DRAW);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size() * sizeof(GLuint), indicies.data(), GL_DYNAMIC_DRAW);
+    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size() * sizeof(GLuint), indicies.data(), GL_DYNAMIC_DRAW);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -280,8 +311,8 @@ void Chunk::storeUVQuadsInLookup()
     UVQuad dirtFace = TA.getCoordsForBlock("Dirt");
     UVQuad grassSide = TA.getCoordsForBlock("Side Grass");
   
-    uvLookup[GRASS] = array<UVQuad, 6>();
-    array<UVQuad, 6>& grassEntry = uvLookup[GRASS];
+    uvLookup[BlockID::GRASS] = array<UVQuad, 6>();
+    array<UVQuad, 6>& grassEntry = uvLookup[BlockID::GRASS];
 
     grassEntry[TOP_FACE] = grassTop;
     grassEntry[BOTTOM_FACE] = dirtFace;
@@ -291,8 +322,8 @@ void Chunk::storeUVQuadsInLookup()
     grassEntry[LEFT_FACE] = grassSide;
 
     // Dirt Creation
-    uvLookup[DIRT] = array<UVQuad, 6>();
-    array<UVQuad, 6>& dirtEntry = uvLookup[DIRT];
+    uvLookup[BlockID::DIRT] = array<UVQuad, 6>();
+    array<UVQuad, 6>& dirtEntry = uvLookup[BlockID::DIRT];
 
     dirtEntry[TOP_FACE] = dirtFace;
     dirtEntry[BOTTOM_FACE] = dirtFace;
@@ -323,7 +354,9 @@ void Chunk::draw()
     glBindTexture(GL_TEXTURE_2D, TEXTURE);
     glBindVertexArray(VAO);
 
+    // glDrawElements(GL_TRIANGLES, indicies.size(), GL_UNSIGNED_INT, (void*) 0);
     glDrawElements(GL_TRIANGLES, facesThatCanBeSeen * 6, GL_UNSIGNED_INT, (void*) 0);
+
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
@@ -353,24 +386,30 @@ inline void Chunk::pushIndx(GLuint idx0, GLuint idx1, GLuint idx2, GLuint idx3)
     indicies.push_back(idx0);
 }
 
-ChunkManager::ChunkManager(GLuint program) : program(program)
+ChunkManager::ChunkManager(GLuint program, GLuint chunk_dim) : program(program)
 {
-    CHUNK_DIM = 4;
-    // for (int x = 0; x < CHUNK_DIM; ++x)
-    // {
-    //     for (int z = 0; z < CHUNK_DIM; ++z)
-    //     {
-    //         glm::vec3 cc = {x, 0, z};
-    //         chunks[cc] = Chunk(x, 0, z);
-    //     }
+    CHUNK_DIM = chunk_dim;
+    for (int x = 1; x <= CHUNK_DIM; ++x)
+    {
+        for (int z = 1; z <= CHUNK_DIM; ++z)
+        {
+            glm::ivec3 cc = {x, 0, z};
+            // chunks[cc] = Chunk(x, 0, z);
+            chunks.try_emplace(cc, this, x, 0, z);
+        }
     
-    // }
+    }
 
-    glm::vec3 cc = {0, 0, 0};
-    chunks[cc] = Chunk(cc.x, cc.y, cc.z);
+    for (auto& [coords, chunk] : chunks)
+    {
+        chunk.sendData();
+    }
 
-    cc = {1, 0, 0};
-    chunks[cc] = Chunk(cc.x, cc.y, cc.z);
+    // glm::vec3 cc = {0, 0, 0};
+    // chunks[cc] = Chunk(cc.x, cc.y, cc.z);
+
+    // cc = {1, 0, 0};
+    // chunks[cc] = Chunk(cc.x, cc.y, cc.z);
 
     ccLoc = glGetUniformLocation(program, "cc");
 

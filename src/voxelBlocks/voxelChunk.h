@@ -13,6 +13,8 @@
 # include "../stb_image/stb_image.h"
 # include "../textureAtlas/textureAtlas.h"
 
+class ChunkManager;
+
 using std::vector, std::array, std::pair, std::unordered_map;
 
 using UV = pair<float, float>;
@@ -23,7 +25,7 @@ const GLuint CHUNKSIZE_Y = 256;
 const GLuint CHUNKSIZE_Z = 16;
 const GLuint CHUNKVOLUME = CHUNKSIZE_X * CHUNKSIZE_Y * CHUNKSIZE_Z;
 
-enum BlockID : GLuint
+enum class BlockID : GLuint
 {
     AIR,
     DIRT,
@@ -62,9 +64,12 @@ enum FaceIDIdx : unsigned short
 
 class Chunk
 {
+
+    friend class ChunkManager;
+
 public:
 
-    Chunk(int cx=0, int cy=0, int cz=0);
+    Chunk(ChunkManager* chunkmanager, int cx=0, int cy=0, int cz=0);
 
     bool operator==(const Chunk& other) const {
         return this->cc == other.cc;
@@ -91,6 +96,8 @@ private:
 
     GLuint facesThatCanBeSeen;
     GLuint blocksThatCanBeSeen;
+
+    ChunkManager* cm;
 
     // Look up of faces
     unordered_map<BlockID, array<UVQuad, 6>> uvLookup;
@@ -123,8 +130,11 @@ struct ChunkCoordHash
 };
 
 class ChunkManager{
-public:
-    ChunkManager(GLuint program);
+
+    friend class Chunk;
+
+public: 
+    ChunkManager(GLuint program, GLuint chunk_dim = 2);
 
     Chunk* getChunk(glm::ivec3 chunkCoord)
     {
