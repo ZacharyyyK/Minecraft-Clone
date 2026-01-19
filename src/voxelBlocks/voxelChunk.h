@@ -22,7 +22,8 @@ using UVQuad = array<UV, 4>;
 
 const GLuint CHUNKSIZE_X = 16;
 const GLuint CHUNKSIZE_Y = 256;
-const GLuint CHUNKSIZE_Z = 16;
+const GLuint CHUNKSIZE_Z = CHUNKSIZE_X;
+const GLuint CHUNKSIZE_HORI_STEP = CHUNKSIZE_X;
 const GLuint CHUNKVOLUME = CHUNKSIZE_X * CHUNKSIZE_Y * CHUNKSIZE_Z;
 
 enum class BlockID : GLuint
@@ -144,12 +145,26 @@ public:
         return &(it->second);
     }
 
-    void draw();
+    void draw(const glm::vec3& lastPos, const glm::vec3 curPos);
+
+    glm::ivec3 WorldCoordToChunkCoord(glm::vec3 worldCoord);
+    Chunk* findMostLeftChunk(int z);
+    Chunk* findMostRightChunk(int z);
+
+    Chunk* findMostFrwdChunk(int x);
+    Chunk* findMostBackChunk(int x);
 
 private:
     std::unordered_map<glm::ivec3, Chunk, ChunkCoordHash> chunks;
-
+    
     GLuint program;
     GLuint CHUNK_DIM;
+    int CHUNK_DIM_HALF;
     GLuint ccLoc;
+
+    int minX;
+    int maxX;
+    
+    int minZ;
+    int maxZ;
 };

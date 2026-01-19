@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 #include <print>
+#include <thread>
+#include <chrono>
 
 #include "stb_image/stb_image.h"
 #include "window/window.h"
@@ -78,7 +80,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
     }
 
-    if (key == GLFW_KEY_P and action == GLFW_PRESS)
+    if (key == GLFW_KEY_P && action == GLFW_PRESS)
     {
         renderWireframe = !renderWireframe;
 
@@ -109,13 +111,11 @@ void processInput(GLFWwindow* window)
     //     }
     // }
 
-    // Only move camera when locked, if you want "pause"
     t1 = (float)glfwGetTime();
     if (lockedMouse)
         camera.ProcessCameraInput(window, t1 - t0);
     t0 = t1;
 }
-
 
 int main()
 {
@@ -144,35 +144,39 @@ int main()
         return 1;
 
     glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_CULL_FACE);
+    // glCullFace(GL_BACK);
 
     Program p("src/shaders/vertexShader.vert", "src/shaders/fragmentShader.frag");
     
     glm::mat4 perspectiveMat = camera.getPerspective();
+
     p.SetMat4Uniform("perspective", perspectiveMat);
+
+    // glm::mat4 scaleMat = glm::scale(glm::mat4(1.0f), {0.25f, 0.25f, 0.25f});
+    // p.SetMat4Uniform("scale", scaleMat);
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     TextureAtlas TA(2, 2);
-    
-    
-    // Chunk chunk;
-    // array<pair<float, float>, 4> sideGrassCoords = TA.getCoordsForBlock(0,0);
-    auto sideGrassCoords = TA.getCoordsForBlock("Side Grass");
-    auto botGrassCords = TA.getCoordsForBlock(0, 1);
-    auto topGrassCords = TA.getCoordsForBlock(1,0);
 
-    // GrassBlock cube(sideGrassCoords, botGrassCords, topGrassCords);
+    int cmDim = 4;
+    int cmDimHalf = cmDim / 2;
 
-    for (int i = 0; i < 4; ++i)
-    {
-        std::cout << botGrassCords[i].first << " " << botGrassCords[i].second << std::endl;
-    }
+    ChunkManager cm(p.getID(), cmDim);
+    camera.Position.x = CHUNKSIZE_X * cmDimHalf;
+    camera.Position.y = 17.0f;
+    camera.Position.z = CHUNKSIZE_Z * cmDimHalf ;
+
+    std::cout << camera.Position.x << " " << camera.Position.z << std::endl;
+    std::cout << camera.Front.x << " " << camera.Front.y << " " << camera.Front.z << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     // exit(1);
 
-    // Chunk chunk;
+    glm::vec3 lastPos = camera.Position;
+    glm::vec3 curPos = lastPos;
 
-    ChunkManager cm(p.getID(), 8);
-
+    int dx, dz;
     while(!window.shouldClose())
     {
         processInput(window.getWindow());
@@ -182,10 +186,12 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         p.SetMat4Uniform("view", view);
 
-        // tri.draw();
-        // cube.draw();
-        // chunk.draw();
-        cm.draw();
+        curPos = camera.Position;
+    
+        cm.draw(lastPos, curPos);
+
+        lastPos = curPos;
+
 
         window.swapBuffers();
         window.pollEvents();
