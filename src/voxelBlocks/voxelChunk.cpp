@@ -144,10 +144,9 @@ bool Chunk::isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face)
 
         case BOTTOM_FACE:
         {
-            // if (y == 0) return false;
+            if (y == 0) return false;
             // return blocks[index(x, y - 1, z)] == BlockID::AIR;
-            return (y == 0) ||
-                   blocks[index(x, y - 1, z)] == BlockID::AIR;
+            return blocks[index(x, y - 1, z)] == BlockID::AIR;
         }
         case FRONT_FACE:
         {
@@ -450,7 +449,7 @@ void ChunkManager::draw(const glm::vec3& lastPos, const glm::vec3 curPos)
     {
         Chunk& chunk = *it;
 
-        // chunk.cc += dCC;
+        chunk.cc += dCC;
         glm::ivec3& cc = chunk.getChunkCoords();
         glm::vec3 worldOffset = glm::vec3(cc.x * CHUNKSIZE_X, cc.y * CHUNKSIZE_Y, cc.z * CHUNKSIZE_Z) * 1.0f;
 
@@ -494,7 +493,7 @@ BlockID ChunkManager::getBlock(glm::ivec3 bc)
     int chunkIdx = getCCIdx(cc);
     Chunk& chunk = chunks.at(chunkIdx);
 
-    return chunk.blocks[chunk.index(dbc.x, dbc.y, dbc.z)];
+    return chunk.blocks.at(chunk.index(dbc.x, dbc.y, dbc.z));
 }
 
 void ChunkManager::_breakBlock(glm::ivec3 bc)
@@ -507,11 +506,42 @@ void ChunkManager::_breakBlock(glm::ivec3 bc)
 
     chunk.blocks[chunk.index(dbc.x, dbc.y, dbc.z)] = BlockID::AIR;
     chunk.sendData();
+
+    glm::ivec3 lbc = dbc % 16;
+
+    if (lbc.x == 0)
+    {
+        int chunkLftIdx = getCCIdx({cc.x - 1, cc.y, cc.z});
+        if (chunkLftIdx != -1) chunks[chunkLftIdx].sendData();
+    }
+    else if (lbc.x == CHUNKSIZE_X - 1)
+    {
+        int chunkRgtIdx = getCCIdx({cc.x + 1, cc.y, cc.z});
+        if (chunkRgtIdx != -1) chunks[chunkRgtIdx].sendData();
+    }
+
+    if (lbc.z == 0)
+    {
+        int chunkBckIdx = getCCIdx({cc.x, cc.y, cc.z - 1});
+        if (chunkBckIdx != -1) chunks[chunkBckIdx].sendData();
+    }
+    else if (lbc.z == CHUNKSIZE_Z - 1)
+    {
+        int chunkFrdIdx = getCCIdx({cc.x, cc.y, cc.z + 1});
+        if (chunkFrdIdx != -1) chunks[chunkFrdIdx].sendData();
+    }
+
 }
 
 void ChunkManager::breakBlock(glm::vec3 pos, glm::vec3 dir)
 {
+
+    if (pos.y < 0) return;
+
     glm::ivec3 bc = WorldCoordToBlockCoord(pos);
+
+    if (bc.y <= 0) return; //Don't break bottom layer of blocks
+
     glm::ivec3 bcB = bc;
 
     dir = glm::normalize(dir);
@@ -562,6 +592,7 @@ void ChunkManager::breakBlock(glm::vec3 pos, glm::vec3 dir)
     BlockID block = BlockID::AIR;
     while (minT < maxDist)
     {
+        if (bc.y <= 0) break; // Don't break bottom layer of blocks
 
         block = getBlock(bc);
         if (block != BlockID::AIR) break; 
