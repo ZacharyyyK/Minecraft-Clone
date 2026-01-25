@@ -43,6 +43,8 @@ bool lockedMouse = true;
 
 bool renderWireframe = false;
 
+ChunkManager* cmPtr = nullptr;
+
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 
@@ -87,35 +89,30 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         if (renderWireframe) glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
         else glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     }
+
 }
 
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, ChunkManager* cm)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, 1);
-
-    // if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
-    // {
-    //     lockedMouse = !lockedMouse;
-
-    //     if (lockedMouse)
-    //     {
-    //         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    //         glfwSetCursorPosCallback(window, mouse_callback);
-    //         firstMouse = true;
-    //     }
-    //     else
-    //     {
-    //         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    //         glfwSetCursorPosCallback(window, nullptr);
-    //     }
-    // }
 
     t1 = (float)glfwGetTime();
     if (lockedMouse)
         camera.ProcessCameraInput(window, t1 - t0);
     t0 = t1;
+
 }
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        cmPtr->breakBlock(camera.Position, camera.Front);       
+    }
+
+}    
+
 
 int main()
 {
@@ -144,6 +141,8 @@ int main()
     Window window("Minecraft", WIDTH, HEIGHT);
     glfwSetCursorPosCallback(window.getWindow(), mouse_callback);
     glfwSetKeyCallback(window.getWindow(), key_callback);
+    glfwSetMouseButtonCallback(window.getWindow(), mouse_button_callback);
+
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
         return 1;
@@ -169,6 +168,8 @@ int main()
     int cmDimHalf = cmDim / 2;
 
     ChunkManager cm(p.getID(), cmDim);
+    cmPtr = &cm;
+
     camera.Position.x = CHUNKSIZE_X * cmDimHalf;
     camera.Position.y = 17.0f;
     camera.Position.z = CHUNKSIZE_Z * cmDimHalf ;
@@ -179,7 +180,7 @@ int main()
     int dx, dz;
     while(!window.shouldClose())
     {
-        processInput(window.getWindow());
+        processInput(window.getWindow(), &cm);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

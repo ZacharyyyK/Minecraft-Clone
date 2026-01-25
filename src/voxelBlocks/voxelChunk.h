@@ -126,7 +126,13 @@ public:
     void draw(const glm::vec3& lastPos, const glm::vec3 curPos);
 
     glm::ivec3 WorldCoordToChunkCoord(glm::vec3 worldCoord);
+    glm::ivec3 WorldCoordToBlockCoord(glm::vec3 worldCoor);
+    glm::vec3 ChunkBlockCoordToWorld(glm::ivec3 cc, glm::ivec3 bc);
 
+    inline glm::ivec3 BlockCoordToChunkCoord(glm::ivec3 bc);
+
+    void breakBlock(glm::vec3 pos, glm::vec3 dir);
+    BlockID getBlock(glm::ivec3 bc);
 private:
    
     int getCCIdx(glm::ivec3 cc);
@@ -139,4 +145,6 @@ private:
     GLuint ccLoc;
 
     int zWidth;
+
+    void _breakBlock(glm::ivec3 bc);
 };

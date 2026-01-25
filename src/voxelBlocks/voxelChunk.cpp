@@ -450,12 +450,144 @@ void ChunkManager::draw(const glm::vec3& lastPos, const glm::vec3 curPos)
     {
         Chunk& chunk = *it;
 
-        chunk.cc += dCC;
+        // chunk.cc += dCC;
         glm::ivec3& cc = chunk.getChunkCoords();
         glm::vec3 worldOffset = glm::vec3(cc.x * CHUNKSIZE_X, cc.y * CHUNKSIZE_Y, cc.z * CHUNKSIZE_Z) * 1.0f;
 
         glUniform3fv(ccLoc, 1, &worldOffset[0]);
 
         chunk.draw();
+    }
+}
+
+glm::vec3 ChunkManager::ChunkBlockCoordToWorld(glm::ivec3 cc, glm::ivec3 bc)
+{
+    float x = cc.x * CHUNKSIZE_X + bc.x;
+    // float y = cc.y * CHUNKSIZE_Y + bc.y; # Chunk coord y is always 0
+    float y =       0            + bc.y;
+    float z = cc.z * CHUNKSIZE_Z + bc.z;
+
+    // Centers... maybe
+    x += 0.5f;
+    y += 0.5f;
+    z += 0.5;
+
+    return {x, y, z};
+}
+
+glm::ivec3 ChunkManager::WorldCoordToBlockCoord(glm::vec3 worldCoord)
+{
+    glm::ivec3 bc = glm::floor(worldCoord);
+    return bc;
+}
+
+glm::ivec3 ChunkManager::BlockCoordToChunkCoord(glm::ivec3 bc)
+{
+    return {bc.x / CHUNKSIZE_X, 0, bc.z / CHUNKSIZE_Z};
+}
+
+BlockID ChunkManager::getBlock(glm::ivec3 bc)
+{
+    glm::ivec3 cc = BlockCoordToChunkCoord(bc);
+    glm::ivec3 dbc = bc - glm::ivec3{cc.x * CHUNKSIZE_X, 0, cc.z * CHUNKSIZE_Z};
+
+    int chunkIdx = getCCIdx(cc);
+    Chunk& chunk = chunks.at(chunkIdx);
+
+    return chunk.blocks[chunk.index(dbc.x, dbc.y, dbc.z)];
+}
+
+void ChunkManager::_breakBlock(glm::ivec3 bc)
+{
+    glm::ivec3 cc = BlockCoordToChunkCoord(bc);
+    glm::ivec3 dbc = bc - glm::ivec3{cc.x * CHUNKSIZE_X, 0, cc.z * CHUNKSIZE_Z};
+
+    int chunkIdx = getCCIdx(cc);
+    Chunk& chunk = chunks.at(chunkIdx);
+
+    chunk.blocks[chunk.index(dbc.x, dbc.y, dbc.z)] = BlockID::AIR;
+    chunk.sendData();
+}
+
+void ChunkManager::breakBlock(glm::vec3 pos, glm::vec3 dir)
+{
+    glm::ivec3 bc = WorldCoordToBlockCoord(pos);
+    glm::ivec3 bcB = bc;
+
+    dir = glm::normalize(dir);
+
+    int dx, dy, dz; 
+    if (dir.x > 0.) dx = 1; else if (dir.x < 0.) dx = -1; else dx = 0;
+    if (dir.y > 0.) dy = 1; else if (dir.y < 0.) dy = -1; else dy = 0;
+    if (dir.z > 0.) dz = 1; else if (dir.z < 0.) dz = -1; else dz = 0;
+
+    float tMaxX, tMaxY, tMaxZ; 
+    tMaxX = std::numeric_limits<float>::max(); tMaxY = std::numeric_limits<float>::max(); tMaxZ = std::numeric_limits<float>::max();
+
+    if (dx != 0)
+    {
+        float xBound = bcB.x;
+        if (dx > 0) xBound += 1.0f;
+     
+        tMaxX = ( xBound - pos.x) / dir.x;
+    }
+    if (dy != 0)
+    {
+        
+        float yBound = bcB.y;
+        if (dy > 0) yBound += 1.0f;
+
+        tMaxY = ( yBound - pos.y) / dir.y;
+    }
+    if (dz != 0)
+    {
+
+        float zBound = bcB.z;
+        if (dz > 0) zBound += 1.0f;
+
+        tMaxZ = ( zBound - pos.z) / dir.z;
+    }
+
+    float tDeltaX, tDeltaY, tDeltaZ;
+    tDeltaX = std::numeric_limits<float>::max(); tDeltaY = std::numeric_limits<float>::max(); tDeltaZ = std::numeric_limits<float>::max();;
+
+    if (dx != 0) tDeltaX = 1.0f / glm::abs(dir.x);
+    if (dy != 0) tDeltaY = 1.0f / glm::abs(dir.y);
+    if (dz != 0) tDeltaZ = 1.0f / glm::abs(dir.z);
+    
+    float maxDist = 5.0f;
+
+    float minT = std::min({tMaxX, tMaxY, tMaxZ});
+
+    BlockID block = BlockID::AIR;
+    while (minT < maxDist)
+    {
+
+        block = getBlock(bc);
+        if (block != BlockID::AIR) break; 
+
+        if (tMaxX <= tMaxY && tMaxX <= tMaxZ)
+        {
+            bc.x += dx;
+            tMaxX += tDeltaX;
+        }
+        else if (tMaxY <= tMaxX && tMaxY <= tMaxZ)
+        {
+            bc.y += dy;
+            tMaxY += tDeltaY;
+        }
+        else
+        {
+            bc.z += dz;
+            tMaxZ += tDeltaZ;
+        }
+    
+        minT = std::min({tMaxX, tMaxY, tMaxZ});
+
+    }
+
+    if (block != BlockID::AIR)
+    {
+        _breakBlock(bc);
     }
 }
