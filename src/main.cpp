@@ -120,6 +120,11 @@ void processInput(GLFWwindow* window)
 int main()
 {
 
+    // glm::ivec3 t = {0, 0, 0};
+    // std::cout << t.x << " "  << t.y << " " << t.z << std::endl;
+    // t.x -= 1;
+    // std::cout << t.x << " "  << t.y << " " << t.z << std::endl;
+    // exit(1);
     if (!glfwInit())    
         return 1;
 
@@ -167,11 +172,6 @@ int main()
     camera.Position.x = CHUNKSIZE_X * cmDimHalf;
     camera.Position.y = 17.0f;
     camera.Position.z = CHUNKSIZE_Z * cmDimHalf ;
-
-    std::cout << camera.Position.x << " " << camera.Position.z << std::endl;
-    std::cout << camera.Front.x << " " << camera.Front.y << " " << camera.Front.z << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    // exit(1);
 
     glm::vec3 lastPos = camera.Position;
     glm::vec3 curPos = lastPos;

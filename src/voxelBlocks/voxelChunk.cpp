@@ -122,16 +122,16 @@ bool Chunk::isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face)
 
     auto neighborIsAir = [&] (glm::ivec3 _cc, GLuint bx, GLuint by, GLuint bz) -> bool
     {
-        return true;
+        // return true;
         // cc is the chunk we want to check,
         // bx, by, bz, are the block to check in this chunk
 
-        auto it = cm->chunks.find(_cc);
+        size_t ccIdx = cm->getCCIdx(_cc);
 
         // if (it == cm->chunks.end()) return false; // If there's no chunk on this side then return true since its exposed (teehee)
-        if (it == cm->chunks.end()) return true; // If there's no chunk on this side then return true since its exposed (teehee)
+        if (ccIdx == -1) return false; // If there's no chunk on this side then return true since its exposed (teehee)
 
-        Chunk& nc = it->second;
+        Chunk& nc = cm->chunks[ccIdx];
 
         return nc.blocks[nc.index(bx, by, bz)] == BlockID::AIR;
     };
@@ -393,21 +393,23 @@ inline void Chunk::pushIndx(GLuint idx0, GLuint idx1, GLuint idx2, GLuint idx3)
 
 ChunkManager::ChunkManager(GLuint program, GLuint chunk_dim) : program(program)
 {
+
     CHUNK_DIM = chunk_dim;
     CHUNK_DIM_HALF = ((int)(CHUNK_DIM)) / 2;
+
+    chunks.reserve(CHUNK_DIM * CHUNK_DIM);
+
     for (int x = 0; x < CHUNK_DIM; ++x)
     {
         for (int z = 0; z < CHUNK_DIM; ++z)
         {
-            chunks.try_emplace({x, 0, z}, this, x, 0, z);
+            Chunk newC(this, x, 0, z);
+            chunks.push_back(newC);
         }
     
     }
 
-    minX = 0; maxX = CHUNK_DIM;
-    minZ = 0; maxZ = CHUNK_DIM;
-
-    for (auto& [coords, chunk] : chunks)
+    for (auto& chunk : chunks)
     {
         chunk.sendData();
     }
@@ -417,201 +419,38 @@ ChunkManager::ChunkManager(GLuint program, GLuint chunk_dim) : program(program)
     glUniform3fv(ccLoc, 1, &glm::vec3(0.f, 0.f, 0.f)[0]);
 }
 
+int ChunkManager::getCCIdx(glm::ivec3 cc)
+{
+    int dx = cc.x - chunks[0].cc.x;
+    int dz = cc.z - chunks[0].cc.z;
+
+    int idx = dx * CHUNK_DIM + dz;
+
+    if (idx >= chunks.size() || idx < 0) idx = -1;
+
+    return idx;
+}
+
 glm::ivec3 ChunkManager::WorldCoordToChunkCoord(glm::vec3 worldCoord)
 {
-//    glm::ivec3 worldCoordFlored = glm::floor(worldCoord);
-//    glm::ivec3 blockCoord = worldCoordFlored % 16;
 
-   glm::ivec3 cc = glm::floor(worldCoord / 16.f);
-
+    glm::ivec3 cc = glm::floor(worldCoord / 16.f);
     return cc;
-}
-
-Chunk* ChunkManager::findMostLeftChunk(int z)
-{
-    int minX = INT_MAX;
-
-    Chunk* farLftChnk = nullptr;
-
-    for (auto it = chunks.begin(); it != chunks.end(); ++it)
-    {
-        Chunk& curChunk = it->second;
-
-        if (curChunk.cc.z != z) continue;
-
-        if (curChunk.cc.x < minX)
-        {
-            minX = curChunk.cc.x;
-            farLftChnk = &curChunk;
-        }
-    }
-
-    // assert (farLftChnk);
-    if (!farLftChnk)
-    {
-        std::cout << "FAR LEFT CHUNK NOT FOUND...IMPOSSIBLE BLEHGHGHJGHG... EXITING" << std::endl;
-        exit(1);
-    }
-
-    return farLftChnk;
-}
-
-Chunk* ChunkManager::findMostRightChunk(int z)
-{
-    int maxX = INT_MIN;
-
-    Chunk* farRgtChnk = nullptr;
-
-    for (auto it = chunks.begin(); it != chunks.end(); ++it)
-    {
-        Chunk& curChunk = it->second;
-
-        if (curChunk.cc.z != z) continue;
-
-        if (curChunk.cc.x > maxX)
-        {
-            maxX = curChunk.cc.x;
-            farRgtChnk = &curChunk;
-        }
-    }
-
-    // assert (farLftChnk);
-    if (!farRgtChnk)
-    {
-        std::cout << "FAR RIGHT CHUNK NOT FOUND...IMPOSSIBLE BLEHGHGHJGHG... EXITING" << std::endl;
-        exit(1);
-    }
-
-    return farRgtChnk;
-}
-
-Chunk* ChunkManager::findMostFrwdChunk(int x)
-{
-    int maxZ = INT_MIN;
-
-    Chunk* farFrwdChunk = nullptr;
-
-    for (auto it = chunks.begin(); it != chunks.end(); ++it)
-    {
-        Chunk& curChunk = it->second;
-
-        if (curChunk.cc.x != x) continue;
-
-        if (curChunk.cc.z > maxZ)
-        {
-            maxZ = curChunk.cc.z;
-            farFrwdChunk = &curChunk;
-        }
-    }
-
-    if (!farFrwdChunk){
-        std::cout << "FAR FORWARD CHUNK NOT FOUND... IMPOSSIBLE BLEJLHGLEHS... EXITING" << std::endl;
-        exit(1);
-    }
-
-    return farFrwdChunk;
-}
-
-Chunk* ChunkManager::findMostBackChunk(int x)
-{
-    int minZ = INT_MAX;
-
-    Chunk* farBackChunk = nullptr;
-
-    for (auto it = chunks.begin(); it != chunks.end(); ++it)
-    {
-        Chunk& curChunk = it->second;
-
-        if (curChunk.cc.x != x) continue;
-
-        if (curChunk.cc.z < minZ)
-        {
-            minZ = curChunk.cc.z;
-            farBackChunk = &curChunk;
-        }
-    }
-
-    if (!farBackChunk)
-    {
-        std::cout << "FAR BACK CHUNK NOT FOUND... IMPOSSIBLE BLHJLHELHG... EXITING" << std::endl;
-        exit(1);
-    }
-
-    return farBackChunk;
 }
 
 void ChunkManager::draw(const glm::vec3& lastPos, const glm::vec3 curPos)
 {
 
-
-    // std::cout << curPos.x << std::endl;
-
     glm::ivec3 lastPosCC = WorldCoordToChunkCoord(lastPos);
     glm::ivec3 curPosCC = WorldCoordToChunkCoord(curPos);
 
     glm::ivec3 dCC = curPosCC - lastPosCC;
-    std::cout << dCC.x << " " << dCC.z << std::endl;
-
-    // std::cout << "Cur Pos X " << curPosCC.x << std::endl;
-    // std::cout << "Lst Pos X " << lastPosCC.x << std::endl;
-    // std::cout << "dCC Pos X " << dCC.x << std::endl;
-
-    if (dCC.x > 0)
-    {
-        for (int z = minZ; z < maxZ; ++z)
-        {
-            Chunk* farLftChunk = findMostLeftChunk(z);
-            Chunk* farRgtChunk = findMostRightChunk(z);
-
-            auto extractedFarLft = chunks.extract(farLftChunk->cc);
-            glm::ivec3 newCC = farRgtChunk->cc; newCC.x += 1;
-            
-            extractedFarLft.key() = newCC;
-            extractedFarLft.mapped().cc = newCC;
-            chunks.insert(std::move(extractedFarLft));
-        }
-    
-        ++minX; ++maxX;
-    }
-    else if (dCC.x < 0)
-    {
-        for (int z = minZ; z < maxZ; ++z)
-        {
-            Chunk* farLftChunk = findMostLeftChunk(z);
-            Chunk* farRgtChunk = findMostRightChunk(z);
-
-            auto extractedFarRgt = chunks.extract(farRgtChunk->cc);
-            glm::ivec3 newCC = farLftChunk->cc; newCC.x -= 1;
-            
-            extractedFarRgt.key() = newCC;
-            extractedFarRgt.mapped().cc = newCC;
-            chunks.insert(std::move(extractedFarRgt));
-        }
-        --minX; --maxX;
-    }
-
-    if (dCC.z > 0)
-    {
-        for (int x = minX; x < maxX; ++x)
-        {
-            Chunk* farFrwdChunk = findMostFrwdChunk(x);
-            Chunk* farBackChunk = findMostBackChunk(x);
-
-            auto extractedFarBackChunk = chunks.extract(farBackChunk->cc);
-            glm::ivec3 newCC = farFrwdChunk->cc; newCC.z += 1;
-
-            extractedFarBackChunk.key() = newCC;
-            extractedFarBackChunk.mapped().cc = newCC;
-            chunks.insert(std::move(extractedFarBackChunk));
-        }
-
-        ++minZ; ++maxZ;
-    }
 
     for (auto it = chunks.begin(); it != chunks.end(); ++it)
     {
-        Chunk& chunk = it->second;
+        Chunk& chunk = *it;
 
+        chunk.cc += dCC;
         glm::ivec3& cc = chunk.getChunkCoords();
         glm::vec3 worldOffset = glm::vec3(cc.x * CHUNKSIZE_X, cc.y * CHUNKSIZE_Y, cc.z * CHUNKSIZE_Z) * 1.0f;
 

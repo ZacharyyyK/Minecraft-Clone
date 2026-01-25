@@ -20,11 +20,11 @@ using std::vector, std::array, std::pair, std::unordered_map;
 using UV = pair<float, float>;
 using UVQuad = array<UV, 4>;
 
-const GLuint CHUNKSIZE_X = 16;
-const GLuint CHUNKSIZE_Y = 256;
-const GLuint CHUNKSIZE_Z = CHUNKSIZE_X;
-const GLuint CHUNKSIZE_HORI_STEP = CHUNKSIZE_X;
-const GLuint CHUNKVOLUME = CHUNKSIZE_X * CHUNKSIZE_Y * CHUNKSIZE_Z;
+const GLint CHUNKSIZE_X = 16;
+const GLint CHUNKSIZE_Y = 256;
+const GLint CHUNKSIZE_Z = CHUNKSIZE_X;
+const GLint CHUNKSIZE_HORI_STEP = CHUNKSIZE_X;
+const GLint CHUNKVOLUME = CHUNKSIZE_X * CHUNKSIZE_Y * CHUNKSIZE_Z;
 
 enum class BlockID : GLuint
 {
@@ -116,20 +116,6 @@ private:
     bool isFaceExposed(GLuint x, GLuint y, GLuint z, FaceIDIdx face);
 };
 
-struct ChunkCoordHash
-{
-    size_t operator()(const glm::ivec3& c) const{
-        size_t hx = std::hash<int>{}(c.x);
-        size_t hy = std::hash<int>{}(c.y);
-        size_t hz = std::hash<int>{}(c.z);
-
-        size_t seed = hx;
-        seed ^= hy + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        seed ^= hz + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        return seed;
-    }
-};
-
 class ChunkManager{
 
     friend class Chunk;
@@ -137,34 +123,20 @@ class ChunkManager{
 public: 
     ChunkManager(GLuint program, GLuint chunk_dim = 2);
 
-    Chunk* getChunk(glm::ivec3 chunkCoord)
-    {
-        auto it = chunks.find(chunkCoord);
-        if (it == chunks.end()) return nullptr;
-
-        return &(it->second);
-    }
-
     void draw(const glm::vec3& lastPos, const glm::vec3 curPos);
 
     glm::ivec3 WorldCoordToChunkCoord(glm::vec3 worldCoord);
-    Chunk* findMostLeftChunk(int z);
-    Chunk* findMostRightChunk(int z);
-
-    Chunk* findMostFrwdChunk(int x);
-    Chunk* findMostBackChunk(int x);
 
 private:
-    std::unordered_map<glm::ivec3, Chunk, ChunkCoordHash> chunks;
+   
+    int getCCIdx(glm::ivec3 cc);
+
+    std::vector<Chunk> chunks;
     
     GLuint program;
     GLuint CHUNK_DIM;
     int CHUNK_DIM_HALF;
     GLuint ccLoc;
 
-    int minX;
-    int maxX;
-    
-    int minZ;
-    int maxZ;
+    int zWidth;
 };
